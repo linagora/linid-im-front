@@ -1,58 +1,40 @@
 import js from '@eslint/js';
-import globals from 'globals';
-import pluginVue from 'eslint-plugin-vue';
 import pluginQuasar from '@quasar/app-vite/eslint';
-import {defineConfigWithVueTs, vueTsConfigs} from '@vue/eslint-config-typescript';
 import prettierSkipFormatting from '@vue/eslint-config-prettier/skip-formatting';
+import {
+  defineConfigWithVueTs,
+  vueTsConfigs,
+} from '@vue/eslint-config-typescript';
+import jsdoc from 'eslint-plugin-jsdoc';
+import vue from 'eslint-plugin-vue';
+import globals from 'globals';
 
 export default defineConfigWithVueTs(
   {
-    /**
-     * Ignore the following files.
-     * Please note that pluginQuasar.configs.recommended() already ignores
-     * the "node_modules" folder for you (and all other Quasar project
-     * relevant folders and files).
-     *
-     * ESLint requires "ignores" key to be the only one in this object
-     */
-    // ignores: []
+    ignores: [
+      'dist/',
+      'coverage/',
+      '**/vite.config.*.timestamp*',
+      '**/vitest.config.*.timestamp*',
+      '.__mf__temp/',
+      '**/__mf__temp/',
+      'src/router/routes.ts',
+      'src/router/index.ts',
+    ],
   },
-
   pluginQuasar.configs.recommended(),
   js.configs.recommended,
-
-  /**
-   * https://eslint.vuejs.org
-   *
-   * pluginVue.configs.base
-   *   -> Settings and rules to enable correct ESLint parsing.
-   * pluginVue.configs[ 'flat/essential']
-   *   -> base, plus rules to prevent errors or unintended behavior.
-   * pluginVue.configs["flat/strongly-recommended"]
-   *   -> Above, plus rules to considerably improve code readability and/or dev experience.
-   * pluginVue.configs["flat/recommended"]
-   *   -> Above, plus rules to enforce subjective community defaults to ensure consistency.
-   */
-  pluginVue.configs['flat/essential'],
-
+  vueTsConfigs.recommended,
+  vue.configs['flat/recommended'],
+  jsdoc.configs['flat/recommended-typescript'],
+  prettierSkipFormatting,
   {
-    files: ['**/*.ts', '**/*.vue'],
-    rules: {
-      '@typescript-eslint/consistent-type-imports': ['error', {prefer: 'type-imports'}],
-    },
-  },
-  // https://github.com/vuejs/eslint-config-typescript
-  vueTsConfigs.recommendedTypeChecked,
-
-  {
+    files: ['**/*.{js,mjs,cjs}'],
     languageOptions: {
-      ecmaVersion: 'latest',
-      sourceType: 'module',
-
       globals: {
         ...globals.browser,
         ...globals.node, // SSR, Electron, config files
-        process: 'readonly', // process.env.*
+        process: 'readonly',
         ga: 'readonly', // Google Analytics
         cordova: 'readonly',
         Capacitor: 'readonly',
@@ -60,16 +42,72 @@ export default defineConfigWithVueTs(
         browser: 'readonly', // BEX related
       },
     },
-
-    // add your custom rules here
+  },
+  {
+    files: ['**/*.{js,mjs,cjs,ts,vue}'],
     rules: {
-      'prefer-promise-reject-errors': 'off',
+      // Vue rules
+      'vue/multi-word-component-names': 'off',
+      'vue/require-default-prop': 'error',
+      'vue/require-prop-types': 'error',
+      'vue/component-api-style': ['error', ['script-setup']],
+      'vue/max-attributes-per-line': 'error',
 
-      // allow debugger during development only
+      // TypeScript rules
+      '@typescript-eslint/no-explicit-any': 'warn',
+      '@typescript-eslint/no-unused-vars': [
+        'error',
+        {
+          argsIgnorePattern: '^_',
+          varsIgnorePattern: '^_',
+        },
+      ],
+      '@typescript-eslint/consistent-type-imports': 'error',
+
+      // JSDoc rules
+      'jsdoc/require-jsdoc': [
+        'error',
+        {
+          require: {
+            ArrowFunctionExpression: true,
+            ClassDeclaration: true,
+            ClassExpression: true,
+            FunctionExpression: true,
+            MethodDefinition: true,
+          },
+          contexts: [
+            'TSPropertySignature',
+            'TSInterfaceDeclaration',
+            'TSTypeAliasDeclaration',
+            'TSEnumDeclaration',
+            'TSModuleDeclaration VariableDeclaration',
+          ],
+        },
+      ],
+      'jsdoc/check-tag-names': 'error',
+      'jsdoc/check-types': 'error',
+      'jsdoc/check-param-names': 'error',
+      'jsdoc/require-description': 'warn',
+      'jsdoc/require-description-complete-sentence': 'error',
+
+      // General rules
+      'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
       'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
+      curly: 'error',
     },
   },
-
+  {
+    files: [
+      '**/*.test.ts',
+      '**/*.spec.ts',
+      '**/__tests__/**',
+      '**/*.config.*',
+      '**/*.config.*',
+    ],
+    rules: {
+      'jsdoc/require-jsdoc': 'off',
+    },
+  },
   {
     files: ['src-pwa/custom-service-worker.ts'],
     languageOptions: {
@@ -77,7 +115,5 @@ export default defineConfigWithVueTs(
         ...globals.serviceworker,
       },
     },
-  },
-
-  prettierSkipFormatting,
+  }
 );
