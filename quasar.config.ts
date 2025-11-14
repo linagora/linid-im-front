@@ -111,11 +111,12 @@ export default defineConfig((ctx) => {
           {
             vueTsc: true,
             eslint: {
-              lintCommand: 'eslint -c ./eslint.config.js "./src*/**/*.{ts,js,mjs,cjs,vue}"',
+              lintCommand:
+                'eslint -c ./eslint.config.js "./src*/**/*.{ts,js,mjs,cjs,vue}"',
               useFlatConfig: true,
             },
           },
-          {server: false},
+          { server: false },
         ],
       ],
     },
@@ -127,10 +128,10 @@ export default defineConfig((ctx) => {
       open: true, // opens browser window automatically
       proxy: {
         '/api': {
-            target: 'https://localhost:8443',
-            changeOrigin: true,
-            secure: false,
-            rewrite: (path) => path.replace(/^\/api/, ''),
+          target: 'https://localhost:8443',
+          changeOrigin: true,
+          secure: false,
+          rewrite: (path) => path.replace(/^\/api/, ''),
         },
       },
     },
@@ -259,7 +260,7 @@ export default defineConfig((ctx) => {
        * The list of extra scripts (js/ts) not in your bex manifest that you want to
        * compile and use in your browser extension. Maybe dynamic use them?
        *
-       * Each entry in the list should be a relative filename to /src-bex/
+       * Each entry in the list should be a relative filename to /src-bex/.
        * @example [ 'my-script.ts', 'sub-folder/my-other-script.js' ]
        */
       extraScripts: [],
