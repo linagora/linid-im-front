@@ -1,10 +1,9 @@
 // Configuration for your app
 // https://v2.quasar.dev/quasar-cli-vite/quasar-config-file
 
-import {defineConfig} from '#q-app/wrappers';
-import {fileURLToPath} from 'node:url';
-import federation from '@originjs/vite-plugin-federation';
-
+import { defineConfig } from '#q-app/wrappers';
+import { federation } from '@module-federation/vite';
+import { fileURLToPath } from 'node:url';
 
 export default defineConfig((ctx) => {
   return {
@@ -62,7 +61,31 @@ export default defineConfig((ctx) => {
       // polyfillModulePreload: true,
       // distDir
 
-      // extendViteConf (viteConf) {},
+      extendViteConf(viteConf) {
+        viteConf.build = {
+          ...viteConf.build,
+          target: 'es2022',
+          modulePreload: false,
+        };
+        viteConf.plugins?.push(
+          federation({
+            name: 'linid-im-front',
+            remotes: {
+              'catalog-ui': 'http://localhost:5001/assets/remoteEntry.js',
+            },
+            shared: {
+              vue: {
+                singleton: true,
+                requiredVersion: '3.5.24',
+              },
+              quasar: {
+                singleton: true,
+                requiredVersion: '2.18.6',
+              },
+            },
+          })
+        );
+      },
       // viteVuePluginOptions: {},
 
       vitePlugins: [
@@ -93,26 +116,6 @@ export default defineConfig((ctx) => {
             },
           },
           {server: false},
-        ],
-
-        [
-          federation,
-          {
-            name: 'linid-im-front',
-            remotes: {
-              'catalog-ui': 'http://localhost:5001/assets/remoteEntry.js'
-            },
-            shared: {
-              vue: {
-                singleton: true,
-                requiredVersion: '=3.5.22',
-              },
-              quasar: {
-                singleton: true,
-                requiredVersion: '=2.16.0',
-              },
-            },
-          },
         ],
       ],
     },
@@ -257,7 +260,6 @@ export default defineConfig((ctx) => {
        * compile and use in your browser extension. Maybe dynamic use them?
        *
        * Each entry in the list should be a relative filename to /src-bex/
-       *
        * @example [ 'my-script.ts', 'sub-folder/my-other-script.js' ]
        */
       extraScripts: [],
