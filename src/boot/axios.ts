@@ -1,9 +1,15 @@
-import {defineBoot} from '#q-app/wrappers';
-import axios, {type AxiosInstance} from 'axios';
+import { defineBoot } from '#q-app/wrappers';
+import axios, { type AxiosInstance } from 'axios';
 
 declare module 'vue' {
+  /**
+   *  Augmenting Vue's ComponentCustomProperties interface
+   *  to include $axios and $api properties for Axios instances.
+   */
   interface ComponentCustomProperties {
+    // eslint-disable-next-line jsdoc/require-jsdoc
     $axios: AxiosInstance;
+    // eslint-disable-next-line jsdoc/require-jsdoc
     $api: AxiosInstance;
   }
 }
@@ -14,9 +20,9 @@ declare module 'vue' {
 // good idea to move this instance creation inside of the
 // "export default () => {}" function below (which runs individually
 // for each client)
-const api = axios.create({baseURL: '/api'});
+const api = axios.create({ baseURL: '/api' });
 
-export default defineBoot(({app}) => {
+export default defineBoot(({ app }) => {
   // for use inside Vue files (Options API) through this.$axios and this.$api
 
   app.config.globalProperties.$axios = axios;
@@ -28,4 +34,4 @@ export default defineBoot(({app}) => {
   //       so you can easily perform requests against your app's API
 });
 
-export {api};
+export { api };
