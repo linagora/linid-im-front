@@ -31,7 +31,6 @@ nyc_output/
 
 # IDEs
 .idea/
-.vscode/
 *.sublime-project
 *.sublime-workspace
 
