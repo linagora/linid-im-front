@@ -38,12 +38,31 @@ pnpm build
 # Lint code
 pnpm lint
 
+# Auto-fix ESLint issues
+pnpm lint:fix
+
 # Format code
 pnpm format
 
+# Check formatting without modifying files
+pnpm format:check
+
 # Run tests
 pnpm test
+
+# Run TypeScript type check
+pnpm type-check
+
+# Run all checks (type-check, lint, format, test)
+pnpm validate
 ```
+
+### Editor Setup
+
+The project includes `.vscode/settings.json` which enables:
+
+- Auto-format on save
+- ESLint auto-fix on save
 
 ## License
 
