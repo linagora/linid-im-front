@@ -2,7 +2,6 @@
 node_modules/
 package-lock.json
 yarn.lock
-pnpm-lock.yaml
 
 # Build outputs
 dist/
@@ -32,7 +31,6 @@ nyc_output/
 
 # IDEs
 .idea/
-.vscode/
 *.sublime-project
 *.sublime-workspace
 
@@ -45,3 +43,7 @@ Thumbs.db
 
 # Optional: Quasar extras / generated files
 .quasar/
+
+# Module Federation temp files
+.__mf__temp/
+**/__mf__temp/
