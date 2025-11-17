@@ -24,10 +24,6 @@ export default defineRouter(function (/* { store, ssrContext } */) {
       : createWebHashHistory;
 
   const Router = createRouter({
-    /**
-     * Scroll behavior to reset scroll position on route navigation
-     * @returns an object with left and top properties set to 0
-     */
     scrollBehavior: () => ({ left: 0, top: 0 }),
     routes,
 
