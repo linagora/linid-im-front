@@ -57,12 +57,75 @@ pnpm type-check
 pnpm validate
 ```
 
-### Editor Setup
+## Module Federation & Remote Configuration
 
-The project includes `.vscode/settings.json` which enables:
+This project uses Module Federation to load remote modules dynamically at runtime.
 
-- Auto-format on save
-- ESLint auto-fix on save
+### Remote Configuration
+
+Remote modules are configured in `public/remotes.json`. This file is loaded automatically at application startup.
+
+**Structure:**
+
+```json
+{
+  "remoteName": "https://remote-host/mf-manifest.json"
+}
+```
+
+**Example (Development):**
+
+```json
+{
+  "catalogUI": "http://localhost:5001/mf-manifest.json"
+}
+```
+
+**Example (Production):**
+
+```json
+{
+  "catalogUI": "https://catalog-ui.example.com/mf-manifest.json"
+}
+```
+
+**Important:** In development, use URLs `http://` for remote controls to avoid having to manage SSL certificates. In production, use URLs `https://` with valid certificates.
+
+### Adding or Modifying Remotes
+
+1. Edit `public/remotes.json`
+2. Add or modify remote entries with their manifest URLs
+3. Restart the development server (no rebuild required)
+
+**Note:** In development, ensure remote applications are running and accessible at the specified URLs (typically `http://localhost:PORT`).
+
+### Using Remote Components
+
+Remote components can be loaded dynamically using `loadRemote` from `@module-federation/enhanced/runtime`:
+
+```typescript
+import { loadRemote } from '@module-federation/enhanced/runtime';
+import { type Component, defineAsyncComponent } from 'vue';
+
+const RemoteComponent = defineAsyncComponent({
+  // eslint-disable-next-line jsdoc/require-jsdoc
+  loader: () =>
+    // eslint-disable-next-line jsdoc/require-jsdoc
+    loadRemote<{ default: Component }>('remoteName/ComponentName').then(
+      (mod) => {
+        if (!mod?.default) {
+          throw new Error('Failed to load ComponentName component');
+        }
+        return mod.default;
+      }
+    ),
+  errorComponent: {
+    template: '<div>Failed to load ComponentName component</div>',
+  },
+});
+```
+
+The remote configuration is loaded automatically by the `remotes` boot file at application startup.
 
 ## License
 
