@@ -13,7 +13,7 @@ export default defineConfig((ctx) => {
     // app boot file (/src/boot)
     // --> boot files are part of "main.js"
     // https://v2.quasar.dev/quasar-cli-vite/boot-files
-    boot: ['i18n', 'axios'],
+    boot: ['i18n', 'axios', 'remotes'],
 
     // https://v2.quasar.dev/quasar-cli-vite/quasar-config-file#css
     css: ['app.scss'],
@@ -71,13 +71,13 @@ export default defineConfig((ctx) => {
           federation({
             name: 'linid-im-front',
             remotes: {
-              'catalog-ui': {
-                type: 'module',
-                name: 'catalog-ui',
-                entry: 'http://localhost:4200/remoteEntry.js',
-                entryGlobalName: 'remote',
-                shareScope: 'default',
-              },
+              // 'catalog-ui': {
+              //   type: 'module',
+              //   name: 'catalog-ui',
+              //   entry: 'http://localhost:4200/remoteEntry.js',
+              //   entryGlobalName: 'remote',
+              //   shareScope: 'default',
+              // },
             },
             shared: {
               vue: {

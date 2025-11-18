@@ -7,7 +7,13 @@
 </template>
 
 <script setup lang="ts">
-import { defineAsyncComponent } from 'vue';
+import { loadRemote } from '@module-federation/enhanced/runtime';
+import { type Component, defineAsyncComponent } from 'vue';
 
-const HelloWorld = defineAsyncComponent(() => import('catalog-ui/HelloWorld'));
+const HelloWorld = defineAsyncComponent(() =>
+  // eslint-disable-next-line jsdoc/require-jsdoc
+  loadRemote<{ default: Component }>('catalog-ui/HelloWorld').then(
+    (mod) => mod!.default
+  )
+);
 </script>
