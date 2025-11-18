@@ -13,7 +13,7 @@ export default defineConfig((ctx) => {
     // app boot file (/src/boot)
     // --> boot files are part of "main.js"
     // https://v2.quasar.dev/quasar-cli-vite/boot-files
-    boot: ['i18n', 'axios'],
+    boot: ['i18n', 'axios', 'remotes'],
 
     // https://v2.quasar.dev/quasar-cli-vite/quasar-config-file#css
     css: ['app.scss'],
@@ -35,7 +35,7 @@ export default defineConfig((ctx) => {
     // Full list of options: https://v2.quasar.dev/quasar-cli-vite/quasar-config-file#build
     build: {
       target: {
-        browser: ['es2022', 'firefox115', 'chrome115', 'safari14'],
+        browser: ['es2022', 'firefox115', 'chrome115', 'safari14', 'brave115'],
         node: 'node20',
       },
 
@@ -70,9 +70,7 @@ export default defineConfig((ctx) => {
         viteConf.plugins?.push(
           federation({
             name: 'linid-im-front',
-            remotes: {
-              'catalog-ui': 'http://localhost:5001/assets/remoteEntry.js',
-            },
+            remotes: {},
             shared: {
               vue: {
                 singleton: true,
@@ -82,6 +80,10 @@ export default defineConfig((ctx) => {
                 singleton: true,
                 requiredVersion: '2.18.6',
               },
+              '@linagora/linid-im-front-corelib': {
+                singleton: true,
+                strictVersion: true,
+              } as Record<string, unknown>,
             },
           })
         );
@@ -123,9 +125,9 @@ export default defineConfig((ctx) => {
 
     // Full list of options: https://v2.quasar.dev/quasar-cli-vite/quasar-config-file#devserver
     devServer: {
-      https: true,
       port: 8081,
       open: true, // opens browser window automatically
+      https: true,
       proxy: {
         '/api': {
           target: 'https://localhost:8443',

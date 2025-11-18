@@ -47,3 +47,6 @@ Thumbs.db
 # Module Federation temp files
 .__mf__temp/
 **/__mf__temp/
+
+# Temporary compiled files
+quasar.config.ts.temporary.compiled.*.mjs
