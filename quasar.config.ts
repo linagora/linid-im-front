@@ -71,7 +71,13 @@ export default defineConfig((ctx) => {
           federation({
             name: 'linid-im-front',
             remotes: {
-              'catalog-ui': 'http://localhost:5001/assets/remoteEntry.js',
+              'catalog-ui': {
+                type: 'module',
+                name: 'catalog-ui',
+                entry: 'http://localhost:4200/remoteEntry.js',
+                entryGlobalName: 'remote',
+                shareScope: 'default',
+              },
             },
             shared: {
               vue: {
@@ -82,6 +88,10 @@ export default defineConfig((ctx) => {
                 singleton: true,
                 requiredVersion: '2.18.6',
               },
+              '@linagora/linid-im-front-corelib': {
+                singleton: true,
+                strictVersion: true,
+              } as Record<string, unknown>,
             },
           })
         );
