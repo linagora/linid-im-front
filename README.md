@@ -57,75 +57,89 @@ pnpm type-check
 pnpm validate
 ```
 
-## Module Federation & Remote Configuration
+## Architecture Overview
 
-This project uses Module Federation to load remote modules dynamically at runtime.
+This project uses **Module Federation** to implement a **micro-frontend architecture** with two types of remotes:
 
-### Remote Configuration
+### 1. Business Modules (Micro-Frontends)
 
-Remote modules are configured in `public/remotes.json`. This file is loaded automatically at application startup.
+Full-featured modules that implement business logic and features.
 
-**Structure:**
+- Implement the **module lifecycle** system
+- Manage their own state (Pinia stores)
+- Register in `/public/config/` with configuration files
 
-```json
-{
-  "remoteName": "https://remote-host/mf-manifest.json"
-}
-```
+**See:** [Module Lifecycle Documentation](src/boot/README.md)
 
-**Example (Development):**
+### 2. UI Component Library
 
-```json
-{
-  "catalogUI": "http://localhost:5001/mf-manifest.json"
-}
-```
+**catalogUI**: A shared component library providing generic, reusable UI components.
 
-**Example (Production):**
+- Does NOT implement the module lifecycle
+- Does NOT require configuration files
+- Components can be used directly via `loadRemote()`
 
-```json
-{
-  "catalogUI": "https://catalog-ui.example.com/mf-manifest.json"
-}
-```
+## Configuration
 
-**Important:** In development, use URLs `http://` for remote controls to avoid having to manage SSL certificates. In production, use URLs `https://` with valid certificates.
+### Module Federation Remotes (`/public/remotes.json`)
 
-### Adding or Modifying Remotes
+Lists all Module Federation remotes (both business modules and component library).
 
-1. Edit `public/remotes.json`
-2. Add or modify remote entries with their manifest URLs
-3. Restart the development server (no rebuild required)
+### Business Module Configuration (`/public/config/`)
 
-**Note:** In development, ensure remote applications are running and accessible at the specified URLs (typically `http://localhost:PORT`).
+Only business modules need configuration files.
 
-### Using Remote Components
+**See:** [Configuration Documentation](public/config/README.md)
 
-Remote components can be loaded dynamically using `loadRemote` from `@module-federation/enhanced/runtime`:
+## Using Components
+
+Components from remotes can be loaded using Module Federation:
 
 ```typescript
 import { loadRemote } from '@module-federation/enhanced/runtime';
 import { type Component, defineAsyncComponent } from 'vue';
 
-const RemoteComponent = defineAsyncComponent({
-  // eslint-disable-next-line jsdoc/require-jsdoc
+const MyComponent = defineAsyncComponent({
   loader: () =>
-    // eslint-disable-next-line jsdoc/require-jsdoc
-    loadRemote<{ default: Component }>('remoteName/ComponentName').then(
-      (mod) => {
-        if (!mod?.default) {
-          throw new Error('Failed to load ComponentName component');
-        }
-        return mod.default;
+    loadRemote<{ default: Component }>('catalogUI/SearchBar').then((mod) => {
+      if (!mod?.default) {
+        throw new Error('Failed to load component');
       }
-    ),
-  errorComponent: {
-    template: '<div>Failed to load ComponentName component</div>',
-  },
+      return mod.default;
+    }),
 });
 ```
 
-The remote configuration is loaded automatically by the `remotes` boot file at application startup.
+## Adding New Remotes
+
+### Adding a Business Module
+
+1. Add remote to `/public/remotes.json`
+2. Add module to `/public/config/modules.json`
+3. Create module configuration file
+4. Implement module lifecycle
+
+**See:** [Module Lifecycle Documentation](src/boot/README.md) for implementation details.
+
+### Adding UI Components (like catalogUI)
+
+1. Add remote to `/public/remotes.json`
+2. Use components via `loadRemote()`
+
+No configuration or lifecycle implementation needed.
+
+## Troubleshooting
+
+### Module Not Loading
+
+See [Module Lifecycle Documentation](src/boot/README.md#error-handling) for detailed troubleshooting.
+
+### Component Not Loading
+
+1. Verify remote is registered in `/public/remotes.json`
+2. Check component is exposed in Module Federation config
+3. Verify remote application is running (in development)
+4. Check browser console for errors
 
 ## License
 
