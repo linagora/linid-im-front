@@ -1,3 +1,102 @@
+# **linid-im-front**
+
+## **🧩 Overview**
+
+`linid-im-front` is the **host application** of the LinID Identity Manager front-end ecosystem.
+It is responsible for:
+
+* Loading **remote modules** dynamically using **Module Federation**
+* Integrating **community plugins** and **core components**
+* Providing the main application shell (routing, layout, authentication context…)
+* Exposing shared resources used across all modules
+
+This project acts as the central entrypoint of the LinID front-end architecture and orchestrates how remote modules are loaded and connected together.
+
+---
+
+## **✨ Features**
+
+* Hosts all **remote modules** (users, groups, organizations, workflow UI, catalog UI…)
+* Dynamically loads **community plugins**
+* Provides global router, layout container, and shared store
+* Integrates with **Quasar UI** + **Vue 3 Composition API**
+
+---
+
+## **🛠️ Tech Stack**
+
+| Area            | Technology               |
+| --------------- |--------------------------|
+| Language        | TypeScript               |
+| Framework       | Vue.js (Composition API) |
+| UI Toolkit      | Quasar Framework         |
+| Module System   | Module Federation        |
+| Package Manager | pnpm / Corepack          |
+
+---
+
+## **📋 Requirements**
+
+* **Node.js 20+**
+* **pnpm 10.20.0** (managed via Corepack)
+* A browser supporting dynamic module loading
+* Recommended: Linux/macOS or WSL2 on Windows
+
+---
+
+# **📚 Documentation**
+
+All documentation is available inside the `docs/` folder.
+
+Below is the list of available guides:
+
+---
+
+### 🔗 **Configuring Remotes (Module Federation)**
+
+How to register remote modules, set remote URLs, and configure dynamic loading.
+→ [`remotes.md`](docs/remotes.md)
+
+---
+
+### 🧩 **Module Lifecycle Guide**
+
+Explains how the module lifecycle system initializes, manages, and executes all lifecycle phases for business modules in the host application.
+→ [`module-lifecycle.md`](docs/module-lifecycle.md)
+
+---
+
+### 🧩 **Modules Configuration Guide**
+
+Explains how feature modules are declared, activated, organized, and displayed in the host.
+→ [`modules.md`](docs/modules.md)
+
+---
+
+> More documentation will be added as the host evolves.
+
+---
+
+## **📜 License**
+
+This project is licensed under the **GNU Affero General Public License v3**.
+See [`LICENSE`](LICENSE).
+
+---
+
+## **🤝 Contributing**
+
+We welcome contributions to improve and extend linid-im-front.
+Please refer to the **[CONTRIBUTING.md](CONTRIBUTING.md)** file in the repository for:
+
+* Development workflow
+* Code guidelines
+* Commit conventions
+* Pull request rules
+
+--------------------------------------------------------------------------------------------------------------------------
+
+
 # linid-im-front
 
 A Vue 3 + Quasar web application for identity management, serving as the host application for LinID's modular identity platform.
