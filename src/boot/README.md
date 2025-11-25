@@ -214,7 +214,7 @@ class MyModule extends BasicRemoteModule {
   }
 }
 
-export default new MyModule();
+export default MyModule;
 ```
 
 ### 2. Expose Lifecycle in Module Federation
@@ -252,7 +252,7 @@ Add your module to the host configuration:
 
 ```json
 {
-  "modules": ["my-business"]
+  "modules": ["my-business-module"]
 }
 ```
 

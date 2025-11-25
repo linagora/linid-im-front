@@ -115,7 +115,7 @@ const MyComponent = defineAsyncComponent({
 ### Adding a Business Module
 
 1. Add remote to `/public/remotes.json`
-2. Add module to `/public/config/modules.json`
+2. Add module configuration path to `/public/config/modules.json`
 3. Create module configuration file
 4. Implement module lifecycle
 
