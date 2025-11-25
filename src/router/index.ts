@@ -16,6 +16,10 @@ import routes from './routes';
  * with the Router instance.
  */
 
+/**
+ * Creates and configures the Vue Router instance.
+ * @returns The Vue Router instance.
+ */
 export default defineRouter(function (/* { store, ssrContext } */) {
   const createHistory = process.env.SERVER
     ? createMemoryHistory

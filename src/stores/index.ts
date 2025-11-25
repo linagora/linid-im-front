@@ -54,6 +54,10 @@ declare module 'pinia' {
  * with the Store instance.
  */
 
+/**
+ * Creates and configures the Pinia store instance.
+ * @returns The Pinia instance.
+ */
 export default defineStore((/* { ssrContext } */) => {
   const pinia = createPinia();
 
