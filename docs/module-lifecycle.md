@@ -34,10 +34,10 @@ Runs the complete lifecycle system:
 
 ### **Execution Flow**
 
-1. Reads the module list from `public/config/modules.json`
+1. Reads the module list from `public/modules.json`
 2. Resolves the URL of each module configuration
 
-    * If no hostname is present, the file is resolved relative to `/public/config/`
+    * If no hostname is present, the file is resolved relative to `/public/`
 3. Loads and validates configuration files
 4. Loads each module’s remote lifecycle entry
 5. Executes all lifecycle phases across all enabled modules

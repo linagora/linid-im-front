@@ -119,16 +119,16 @@ async function initializeModuleLifecycle(app: App): Promise<void> {
 /**
  * Loads module configurations from /config directory.
  *
- * First loads /config/modules.json to get the list of modules,
- * then loads each module's configuration file (/config/module-<name>.json).
+ * First loads /modules.json to get the list of modules,
+ * then loads each module's configuration file from its url.
  * @returns Promise resolving to array of module configurations.
  */
 async function loadModuleConfigs(): Promise<ModuleHostConfig[]> {
   try {
-    const modulesResponse = await fetch('/config/modules.json');
+    const modulesResponse = await fetch('/modules.json');
 
     if (!modulesResponse.ok) {
-      throw new Error('Failed to fetch /config/modules.json');
+      throw new Error('Failed to fetch /modules.json');
     }
 
     const modulesData: {
