@@ -156,6 +156,38 @@ pnpm type-check
 pnpm validate
 ```
 
+---
+
+## **🐳 Docker**
+
+You can build and run `linid-im-front` using Docker. The Docker setup uses a **multi-stage build**:
+
+1. Build the application using Node + pnpm
+2. Serve the built static files with Nginx
+
+### **Build Docker Image**
+
+```bash
+docker build -f docker/Dockerfile -t linid-im-front .
+```
+
+### **Run Docker Container**
+
+```bash
+docker run -p 8080:80 linid-im-front
+```
+
+* The application will be accessible at `http://localhost:8080`
+* The container serves the production build of the SPA from `/usr/share/nginx/html`
+
+### **Notes**
+
+* The Dockerfile uses **pnpm** to install dependencies and build the project.
+* Make sure your `pnpm-lock.yaml` is included in the repository for deterministic builds.
+* You can customize the Nginx configuration if needed by modifying `/etc/nginx/conf.d/default.conf` inside the container or providing a custom `nginx.conf` in the Docker build.
+
+---
+
 ## Module Federation & Remote Configuration
 
 This project uses Module Federation to load remote modules dynamically at runtime.
