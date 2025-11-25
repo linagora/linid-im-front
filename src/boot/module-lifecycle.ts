@@ -149,7 +149,7 @@ async function initializeModuleLifecycle(app: App): Promise<void> {
  * then loads each module's configuration file from its url.
  * @returns Promise resolving to array of module configurations.
  */
-async function loadModuleConfigs(): Promise<ModuleHostConfig[]> {
+export async function loadModuleConfigs(): Promise<ModuleHostConfig[]> {
   try {
     const modulesResponse = await fetch('/modules.json');
 
@@ -209,7 +209,7 @@ async function loadModuleConfigs(): Promise<ModuleHostConfig[]> {
  * @param hostConfig - Host configuration for this module.
  * @returns Promise resolving to the loaded module or null if loading failed.
  */
-async function loadAndRegisterModule(
+export async function loadAndRegisterModule(
   remoteName: string,
   modulePath: string,
   hostConfig: ModuleHostConfig
@@ -268,7 +268,7 @@ async function loadAndRegisterModule(
  * @param phase - The lifecycle phase to execute.
  * @param app - The Vue application instance.
  */
-async function executePhaseForAllModules(
+export async function executePhaseForAllModules(
   phase: ModuleLifecyclePhase,
   app: App
 ): Promise<void> {
@@ -284,6 +284,7 @@ async function executePhaseForAllModules(
   // Log failures and warnings
   results.forEach((result, index) => {
     const module = Array.from(moduleRegistry.values())[index];
+    /* istanbul ignore if -- @preserve defensive check, should never happen */
     if (!module) {
       return;
     }
@@ -315,7 +316,7 @@ async function executePhaseForAllModules(
  * @param app - The Vue application instance.
  * @returns Promise resolving to the lifecycle result.
  */
-async function executeLifecyclePhase(
+export async function executeLifecyclePhase(
   module: RemoteModule,
   phase: ModuleLifecyclePhase,
   app: App
