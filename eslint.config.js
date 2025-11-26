@@ -5,6 +5,7 @@ import {
   defineConfigWithVueTs,
   vueTsConfigs,
 } from '@vue/eslint-config-typescript';
+import headers from 'eslint-plugin-headers';
 import jsdoc from 'eslint-plugin-jsdoc';
 import vue from 'eslint-plugin-vue';
 import globals from 'globals';
@@ -98,6 +99,40 @@ export default defineConfigWithVueTs(
     },
   },
   {
+    files: ['src/**/*.vue'],
+    plugins: {
+      headers,
+    },
+    rules: {
+      'headers/header-format': [
+        'error',
+        {
+          source: 'file',
+          path: 'COPYRIGHT',
+          trailingNewlines: 2,
+          enableVueSupport: true,
+        },
+      ],
+    },
+  },
+  {
+    files: ['src/**/*.{ts,js}'],
+    plugins: {
+      headers,
+    },
+    rules: {
+      'headers/header-format': [
+        'error',
+        {
+          source: 'file',
+          path: 'COPYRIGHT',
+          blockPrefix: '\n',
+          trailingNewlines: 2,
+        },
+      ],
+    },
+  },
+  {
     files: [
       '**/*.test.ts',
       '**/*.spec.ts',
@@ -107,6 +142,7 @@ export default defineConfigWithVueTs(
     ],
     rules: {
       'jsdoc/require-jsdoc': 'off',
+      'headers/header-format': 'off',
     },
   },
   {
