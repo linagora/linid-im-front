@@ -122,7 +122,7 @@ async function initializeModuleLifecycle(app: App): Promise<void> {
   for (const moduleConfig of moduleConfigs) {
     await loadAndRegisterModule(
       moduleConfig.remoteName,
-      './lifecycle',
+      'lifecycle',
       moduleConfig
     );
   }

@@ -238,7 +238,7 @@ describe('Test: module-lifecycle', () => {
       loadRemote.mockResolvedValueOnce(createMockModule());
       const result = await loadAndRegisterModule(
         'testRemote',
-        './lifecycle',
+        'lifecycle',
         config
       );
       expect(loadRemote).toHaveBeenCalledWith('testRemote/lifecycle');
@@ -257,7 +257,7 @@ describe('Test: module-lifecycle', () => {
       loadRemote.mockRejectedValueOnce(new Error('Failed to load remote'));
       const result = await loadAndRegisterModule(
         'testRemote',
-        './lifecycle',
+        'lifecycle',
         createMockModuleConfig()
       );
       expect(result).toBeNull();
@@ -288,7 +288,7 @@ describe('Test: module-lifecycle', () => {
       loadRemote.mockResolvedValueOnce(mockModule);
       const result = await loadAndRegisterModule(
         'testRemote',
-        './lifecycle',
+        'lifecycle',
         createMockModuleConfig()
       );
       expect(result).toBeNull();
@@ -306,7 +306,7 @@ describe('Test: module-lifecycle', () => {
       );
       await loadAndRegisterModule(
         'testRemote',
-        './lifecycle',
+        'lifecycle',
         createMockModuleConfig({ id: 'expected-id' })
       );
       expect(consoleSpy.warn).toHaveBeenCalledWith(
@@ -397,7 +397,7 @@ describe('Test: module-lifecycle', () => {
     it('should pass host config to onConfigure hook', async () => {
       const config = createMockModuleConfig({ customSetting: 'value' });
       loadRemote.mockResolvedValueOnce(createMockModule());
-      await loadAndRegisterModule('testRemote', './lifecycle', config);
+      await loadAndRegisterModule('testRemote', 'lifecycle', config);
       const module = {
         id: 'test-module',
         name: 'Test Module',
@@ -416,7 +416,7 @@ describe('Test: module-lifecycle', () => {
       loadRemote.mockResolvedValueOnce(createMockModule());
       await loadAndRegisterModule(
         'testRemote',
-        './lifecycle',
+        'lifecycle',
         createMockModuleConfig()
       );
     });
@@ -449,7 +449,7 @@ describe('Test: module-lifecycle', () => {
       loadRemote.mockResolvedValueOnce(failingModule);
       await loadAndRegisterModule(
         'failingRemote',
-        './lifecycle',
+        'lifecycle',
         createMockModuleConfig({
           id: 'failing-module',
           remoteName: 'failingRemote',
@@ -474,7 +474,7 @@ describe('Test: module-lifecycle', () => {
       );
       await loadAndRegisterModule(
         'warningRemote',
-        './lifecycle',
+        'lifecycle',
         createMockModuleConfig({
           id: 'warning-module',
           remoteName: 'warningRemote',
@@ -497,7 +497,7 @@ describe('Test: module-lifecycle', () => {
       );
       await loadAndRegisterModule(
         'failingRemote',
-        './lifecycle',
+        'lifecycle',
         createMockModuleConfig({
           id: 'failing-module',
           remoteName: 'failingRemote',
