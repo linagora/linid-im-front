@@ -1,5 +1,5 @@
 {
-  "name": "linid-im-front",
+  "name": "@linagora/linid-im-front",
   "version": "0.0.1",
   "description": "The host app of LinID - Identity Manager",
   "productName": "LinID - Identity Manager",
@@ -32,12 +32,13 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
+    "test:ci": "vitest run --coverage --reporter=dot",
     "dev": "quasar dev",
     "build": "quasar build",
     "postinstall": "quasar prepare"
   },
   "dependencies": {
-    "@linagora/linid-im-front-corelib": "github:linagora/linid-im-front-corelib",
+    "@linagora/linid-im-front-corelib": "0.0.3",
     "@module-federation/enhanced": "0.21.4",
     "@quasar/extras": "1.17.0",
     "axios": "1.13.2",
