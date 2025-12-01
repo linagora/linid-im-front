@@ -1,0 +1,21 @@
+# Changelog
+
+All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+
+### 0.0.2 (2025-12-01)
+
+
+### Features
+
+* add default remotes configuration in public folder ([4835bee](https://github.com/linagora/linid-im-front/commit/4835bee7ceadcfed90716b7efada993a6f51066e))
+* add homepage with layout, routing and i18n ([7c65c5c](https://github.com/linagora/linid-im-front/commit/7c65c5c65666685538d01a0637a6af636b1181c9))
+* add pull-request workflow ([f151e76](https://github.com/linagora/linid-im-front/commit/f151e76e46dafb15a88e21d4d77fb5fd5b2bc6d6))
+* add release workflow ([8aa9f6a](https://github.com/linagora/linid-im-front/commit/8aa9f6ad8efb2e78045cc4cf6da52039158cb1c8))
+* configure Module Federation with Vite plugin ([6d93183](https://github.com/linagora/linid-im-front/commit/6d9318355f52de1c130c4ad4330bc7d6cef71b66))
+* implement module lifecycle management system ([5f19834](https://github.com/linagora/linid-im-front/commit/5f198343e90a37659bcf10a741a9814bd3eb2f84))
+* **test:** add Vitest configuration and test infrastructure ([647b61d](https://github.com/linagora/linid-im-front/commit/647b61d8d854e3ceb52f9bfb195a46d38aea9d43))
+
+
+### Bug Fixes
+
+* unit tests of module-lifecycle ([58620c3](https://github.com/linagora/linid-im-front/commit/58620c374192663246184a1954fff13b747c3a52))
