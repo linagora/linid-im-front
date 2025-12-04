@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.6](https://github.com/linagora/linid-im-front/compare/v0.0.5...v0.0.6) (2025-12-04)
+
+
+### Features
+
+* use port 9000 for dev server ([91f5ea3](https://github.com/linagora/linid-im-front/commit/91f5ea3d3d149005ac81d442dfcf1f50f90c8d8b))
+
 ### [0.0.5](https://github.com/linagora/linid-im-front/compare/v0.0.4...v0.0.5) (2025-12-04)
 
 
