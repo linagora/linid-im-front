@@ -5,10 +5,10 @@
 `linid-im-front` is the **host application** of the LinID Identity Manager front-end ecosystem.
 It is responsible for:
 
-* Loading **remote modules** dynamically using **Module Federation**
-* Integrating **community plugins** and **core components**
-* Providing the main application shell (routing, layout, authentication context…)
-* Exposing shared resources used across all modules
+- Loading **remote modules** dynamically using **Module Federation**
+- Integrating **community plugins** and **core components**
+- Providing the main application shell (routing, layout, authentication context…)
+- Exposing shared resources used across all modules
 
 This project acts as the central entrypoint of the LinID front-end architecture and orchestrates how remote modules are loaded and connected together.
 
@@ -16,17 +16,17 @@ This project acts as the central entrypoint of the LinID front-end architecture 
 
 ## **✨ Features**
 
-* Hosts all **remote modules** (users, groups, organizations, workflow UI, catalog UI…)
-* Dynamically loads **community plugins**
-* Provides global router, layout container, and shared store
-* Integrates with **Quasar UI** + **Vue 3 Composition API**
+- Hosts all **remote modules** (users, groups, organizations, workflow UI, catalog UI…)
+- Dynamically loads **community plugins**
+- Provides global router, layout container, and shared store
+- Integrates with **Quasar UI** + **Vue 3 Composition API**
 
 ---
 
 ## **🛠️ Tech Stack**
 
 | Area            | Technology               |
-| --------------- |--------------------------|
+| --------------- | ------------------------ |
 | Language        | TypeScript               |
 | Framework       | Vue.js (Composition API) |
 | UI Toolkit      | Quasar Framework         |
@@ -37,10 +37,10 @@ This project acts as the central entrypoint of the LinID front-end architecture 
 
 ## **📋 Requirements**
 
-* **Node.js 20+**
-* **pnpm 10.20.0** (managed via Corepack)
-* A browser supporting dynamic module loading
-* Recommended: Linux/macOS or WSL2 on Windows
+- **Node.js 20+**
+- **pnpm 10.20.0** (managed via Corepack)
+- A browser supporting dynamic module loading
+- Recommended: Linux/macOS or WSL2 on Windows
 
 ---
 
@@ -89,13 +89,12 @@ See [`LICENSE`](LICENSE).
 We welcome contributions to improve and extend linid-im-front.
 Please refer to the **[CONTRIBUTING.md](CONTRIBUTING.md)** file in the repository for:
 
-* Development workflow
-* Code guidelines
-* Commit conventions
-* Pull request rules
+- Development workflow
+- Code guidelines
+- Commit conventions
+- Pull request rules
 
---------------------------------------------------------------------------------------------------------------------------
-
+---
 
 # linid-im-front
 
@@ -174,17 +173,17 @@ docker build -f docker/Dockerfile -t linid-im-front .
 ### **Run Docker Container**
 
 ```bash
-docker run -p 8080:80 linid-im-front
+docker run -p 9000:80 linid-im-front
 ```
 
-* The application will be accessible at `http://localhost:8080`
-* The container serves the production build of the SPA from `/usr/share/nginx/html`
+- The application will be accessible at `http://localhost:9000`
+- The container serves the production build of the SPA from `/usr/share/nginx/html`
 
 ### **Notes**
 
-* The Dockerfile uses **pnpm** to install dependencies and build the project.
-* Make sure your `pnpm-lock.yaml` is included in the repository for deterministic builds.
-* You can customize the Nginx configuration if needed by modifying `/etc/nginx/conf.d/default.conf` inside the container or providing a custom `nginx.conf` in the Docker build.
+- The Dockerfile uses **pnpm** to install dependencies and build the project.
+- Make sure your `pnpm-lock.yaml` is included in the repository for deterministic builds.
+- You can customize the Nginx configuration if needed by modifying `/etc/nginx/conf.d/default.conf` inside the container or providing a custom `nginx.conf` in the Docker build.
 
 ---
 
