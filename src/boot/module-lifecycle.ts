@@ -32,7 +32,6 @@ import {
   type RemoteModule,
   type ModuleHostConfig,
 } from '@linagora/linid-im-front-corelib';
-import type { App } from 'vue';
 
 /**
  * Registry of loaded remote modules.
@@ -63,10 +62,9 @@ let currentPhase: ModuleLifecyclePhase | null = null;
  *
  * This orchestrates the loading and initialization of all business modules
  * by executing the five lifecycle phases in sequence.
- * @param app - The Vue application instance.
  */
-export default defineBoot(async ({ app }) => {
-  await initializeModuleLifecycle(app);
+export default defineBoot(async () => {
+  await initializeModuleLifecycle();
 });
 
 /**
@@ -107,9 +105,8 @@ export function getModuleConfig(
  * 1. Load module configurations from /config directory
  * 2. Load all modules via Module Federation
  * 3. Execute the five lifecycle phases in sequence.
- * @param app - The Vue application instance.
  */
-async function initializeModuleLifecycle(app: App): Promise<void> {
+async function initializeModuleLifecycle(): Promise<void> {
   console.log('[Module Lifecycle] Starting module lifecycle initialization');
 
   const moduleConfigs = await loadModuleConfigs();
@@ -133,11 +130,11 @@ async function initializeModuleLifecycle(app: App): Promise<void> {
   }
 
   // Execute all five lifecycle phases in sequence
-  await executePhaseForAllModules(ModuleLifecyclePhase.SETUP, app);
-  await executePhaseForAllModules(ModuleLifecyclePhase.CONFIGURE, app);
-  await executePhaseForAllModules(ModuleLifecyclePhase.INITIALIZE, app);
-  await executePhaseForAllModules(ModuleLifecyclePhase.READY, app);
-  await executePhaseForAllModules(ModuleLifecyclePhase.POST_INIT, app);
+  await executePhaseForAllModules(ModuleLifecyclePhase.SETUP);
+  await executePhaseForAllModules(ModuleLifecyclePhase.CONFIGURE);
+  await executePhaseForAllModules(ModuleLifecyclePhase.INITIALIZE);
+  await executePhaseForAllModules(ModuleLifecyclePhase.READY);
+  await executePhaseForAllModules(ModuleLifecyclePhase.POST_INIT);
 
   console.log('[Module Lifecycle] Module lifecycle initialization complete');
 }
@@ -266,18 +263,16 @@ export async function loadAndRegisterModule(
  * All modules complete the current phase before moving to the next phase.
  * Uses Promise.allSettled to ensure one module's failure doesn't block others.
  * @param phase - The lifecycle phase to execute.
- * @param app - The Vue application instance.
  */
 export async function executePhaseForAllModules(
-  phase: ModuleLifecyclePhase,
-  app: App
+  phase: ModuleLifecyclePhase
 ): Promise<void> {
   currentPhase = phase;
   console.log(`[Module Lifecycle] Starting ${phase} phase for all modules`);
 
   const results = await Promise.allSettled(
     Array.from(moduleRegistry.values()).map((module) =>
-      executeLifecyclePhase(module, phase, app)
+      executeLifecyclePhase(module, phase)
     )
   );
 
@@ -304,6 +299,7 @@ export async function executePhaseForAllModules(
 
   console.log(`[Module Lifecycle] Completed ${phase} phase`);
 }
+
 /**
  * Executes a specific lifecycle phase for a module.
  *
@@ -313,16 +309,13 @@ export async function executePhaseForAllModules(
  * Handles errors gracefully and validates return values.
  * @param module - The remote module.
  * @param phase - The lifecycle phase to execute.
- * @param app - The Vue application instance.
  * @returns Promise resolving to the lifecycle result.
  */
 export async function executeLifecyclePhase(
   module: RemoteModule,
-  phase: ModuleLifecyclePhase,
-  app: App
+  phase: ModuleLifecyclePhase
 ): Promise<ModuleLifecycleResult> {
-  const hookName =
-    `on${phase.charAt(0).toUpperCase()}${phase.slice(1)}` as keyof RemoteModule;
+  const hookName = phase;
   const hook = module[hookName];
 
   if (typeof hook !== 'function') {
@@ -340,11 +333,11 @@ export async function executeLifecyclePhase(
       const hostConfig = moduleConfigRegistry.get(module.id);
       if (hostConfig) {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        result = await (hook as any).call(module, app, hostConfig);
+        result = await (hook as any).call(module, hostConfig);
       }
     } else {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      result = await (hook as any).call(module, app);
+      result = await (hook as any).call(module);
     }
 
     if (!result || typeof result.success !== 'boolean') {
