@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.4](https://github.com/linagora/linid-im-front/compare/v0.0.3...v0.0.4) (2025-12-04)
+
+
+### Bug Fixes
+
+* **boot:** module lifecycle according to linid-im-corelib latest version ([c5c8cb0](https://github.com/linagora/linid-im-front/commit/c5c8cb084eca1deb28431763792f758ab8a0a68f))
+* **ci:** unit-tests job fails if pnpm ci cmd fails ([063dc43](https://github.com/linagora/linid-im-front/commit/063dc438b94ae5f8785a7e8253fb4bbefa709f80))
+
 ### [0.0.3](https://github.com/linagora/linid-im-front/compare/v0.0.2...v0.0.3) (2025-12-01)
 
 ### 0.0.2 (2025-12-01)
