@@ -19,20 +19,16 @@ describe('Test: module-lifecycle', () => {
     moduleLifecycleBoot,
     consoleSpy;
 
-  const mockApp = {
-    config: { globalProperties: { $pinia: {}, $router: {}, $i18n: {} } },
-  };
-
   const createMockModule = (overrides = {}) => ({
     default: {
       id: 'test-module',
       name: 'Test Module',
       version: '1.0.0',
-      onSetup: vi.fn().mockResolvedValue({ success: true }),
-      onConfigure: vi.fn().mockResolvedValue({ success: true }),
-      onInitialize: vi.fn().mockResolvedValue({ success: true }),
-      onReady: vi.fn().mockResolvedValue({ success: true }),
-      'onPost-init': vi.fn().mockResolvedValue({ success: true }),
+      setup: vi.fn().mockResolvedValue({ success: true }),
+      configure: vi.fn().mockResolvedValue({ success: true }),
+      initialize: vi.fn().mockResolvedValue({ success: true }),
+      ready: vi.fn().mockResolvedValue({ success: true }),
+      postInit: vi.fn().mockResolvedValue({ success: true }),
       ...overrides,
     },
   });
@@ -63,11 +59,11 @@ describe('Test: module-lifecycle', () => {
         id: 'test-module',
         name: 'Test Module',
         version: '1.0.0',
-        onSetup: createHook('setup'),
-        onConfigure: createHook('configure'),
-        onInitialize: createHook('initialize'),
-        onReady: createHook('ready'),
-        'onPost-init': createHook('post-init'),
+        setup: createHook('setup'),
+        configure: createHook('configure'),
+        initialize: createHook('initialize'),
+        ready: createHook('ready'),
+        postInit: createHook('postInit'),
       },
     };
   };
@@ -319,8 +315,7 @@ describe('Test: module-lifecycle', () => {
     it('should skip phase and return success when hook is not implemented', async () => {
       const result = await executeLifecyclePhase(
         { id: 'test-module', name: 'Test Module' },
-        'setup',
-        mockApp
+        'setup'
       );
       expect(result).toEqual({ success: true });
       expect(consoleSpy.debug).toHaveBeenCalledWith(
@@ -332,10 +327,10 @@ describe('Test: module-lifecycle', () => {
       const module = {
         id: 'test-module',
         name: 'Test Module',
-        onSetup: vi.fn().mockResolvedValue({ success: true }),
+        setup: vi.fn().mockResolvedValue({ success: true }),
       };
-      const result = await executeLifecyclePhase(module, 'setup', mockApp);
-      expect(module.onSetup).toHaveBeenCalledWith(mockApp);
+      const result = await executeLifecyclePhase(module, 'setup');
+      expect(module.setup).toHaveBeenCalled();
       expect(result).toEqual({ success: true });
       expect(consoleSpy.log).toHaveBeenCalledWith(
         '[Module Lifecycle] test-module: Executing setup phase'
@@ -346,11 +341,11 @@ describe('Test: module-lifecycle', () => {
       const module = {
         id: 'test-module',
         name: 'Test Module',
-        onSetup: vi
+        setup: vi
           .fn()
           .mockResolvedValue({ success: false, error: 'Setup failed' }),
       };
-      expect(await executeLifecyclePhase(module, 'setup', mockApp)).toEqual({
+      expect(await executeLifecyclePhase(module, 'setup')).toEqual({
         success: false,
         error: 'Setup failed',
       });
@@ -365,9 +360,9 @@ describe('Test: module-lifecycle', () => {
         const module = {
           id: 'test-module',
           name: 'Test Module',
-          onSetup: vi.fn().mockRejectedValue(thrownValue),
+          setup: vi.fn().mockRejectedValue(thrownValue),
         };
-        const result = await executeLifecyclePhase(module, 'setup', mockApp);
+        const result = await executeLifecyclePhase(module, 'setup');
         expect(result).toEqual({ success: false, error: expectedError });
         expect(consoleSpy.error).toHaveBeenCalledWith(
           expect.stringContaining('Error in setup phase'),
@@ -384,9 +379,9 @@ describe('Test: module-lifecycle', () => {
       const module = {
         id: 'test-module',
         name: 'Test Module',
-        onReady: vi.fn().mockResolvedValue(returnValue),
+        ready: vi.fn().mockResolvedValue(returnValue),
       };
-      expect(await executeLifecyclePhase(module, 'ready', mockApp)).toEqual({
+      expect(await executeLifecyclePhase(module, 'ready')).toEqual({
         success: true,
       });
       expect(consoleSpy.warn).toHaveBeenCalledWith(
@@ -394,18 +389,17 @@ describe('Test: module-lifecycle', () => {
       );
     });
 
-    it('should pass host config to onConfigure hook', async () => {
+    it('should pass host config to configure hook', async () => {
       const config = createMockModuleConfig({ customSetting: 'value' });
       loadRemote.mockResolvedValueOnce(createMockModule());
       await loadAndRegisterModule('testRemote', 'lifecycle', config);
       const module = {
         id: 'test-module',
         name: 'Test Module',
-        onConfigure: vi.fn().mockResolvedValue({ success: true }),
+        configure: vi.fn().mockResolvedValue({ success: true }),
       };
-      await executeLifecyclePhase(module, 'configure', mockApp);
-      expect(module.onConfigure).toHaveBeenCalledWith(
-        mockApp,
+      await executeLifecyclePhase(module, 'configure');
+      expect(module.configure).toHaveBeenCalledWith(
         expect.objectContaining({ id: 'test-module', customSetting: 'value' })
       );
     });
@@ -423,7 +417,7 @@ describe('Test: module-lifecycle', () => {
 
     it('should execute phase for all registered modules and set currentPhase', async () => {
       expect(getCurrentPhase()).toBeNull();
-      await executePhaseForAllModules('setup', mockApp);
+      await executePhaseForAllModules('setup');
       expect(getCurrentPhase()).toBe('setup');
       expect(consoleSpy.log).toHaveBeenCalledWith(
         '[Module Lifecycle] Starting setup phase for all modules'
@@ -441,7 +435,7 @@ describe('Test: module-lifecycle', () => {
           id: 'failing-module',
           name: 'Failing Module',
           version: '1.0.0',
-          get onSetup() {
+          get setup() {
             throw new Error('Sync error in hook getter');
           },
         },
@@ -455,7 +449,7 @@ describe('Test: module-lifecycle', () => {
           remoteName: 'failingRemote',
         })
       );
-      await executePhaseForAllModules('setup', mockApp);
+      await executePhaseForAllModules('setup');
       expect(consoleSpy.error).toHaveBeenCalledWith(
         '[Module Lifecycle] failing-module: Phase setup rejected:',
         expect.any(Error)
@@ -467,7 +461,7 @@ describe('Test: module-lifecycle', () => {
         createMockModule({
           id: 'warning-module',
           name: 'Warning Module',
-          onSetup: vi
+          setup: vi
             .fn()
             .mockResolvedValue({ success: false, error: 'Setup warning' }),
         })
@@ -480,7 +474,7 @@ describe('Test: module-lifecycle', () => {
           remoteName: 'warningRemote',
         })
       );
-      await executePhaseForAllModules('setup', mockApp);
+      await executePhaseForAllModules('setup');
       expect(consoleSpy.warn).toHaveBeenCalledWith(
         '[Module Lifecycle] warning-module: Phase setup failed:',
         'Setup warning'
@@ -492,7 +486,7 @@ describe('Test: module-lifecycle', () => {
         createMockModule({
           id: 'failing-module',
           name: 'Failing Module',
-          onSetup: vi.fn().mockRejectedValue(new Error('Setup error')),
+          setup: vi.fn().mockRejectedValue(new Error('Setup error')),
         })
       );
       await loadAndRegisterModule(
@@ -504,7 +498,7 @@ describe('Test: module-lifecycle', () => {
         })
       );
       expect(getRegisteredModules().size).toBe(2);
-      await executePhaseForAllModules('setup', mockApp);
+      await executePhaseForAllModules('setup');
       expect(consoleSpy.log).toHaveBeenCalledWith(
         '[Module Lifecycle] Completed setup phase'
       );
@@ -518,7 +512,7 @@ describe('Test: module-lifecycle', () => {
         createMockModuleConfig(),
         createTrackedModule(executionOrder)
       );
-      await moduleLifecycleBoot({ app: mockApp });
+      await moduleLifecycleBoot();
       expect(consoleSpy.log).toHaveBeenCalledWith(
         '[Module Lifecycle] Starting module lifecycle initialization'
       );
@@ -530,13 +524,13 @@ describe('Test: module-lifecycle', () => {
         'configure',
         'initialize',
         'ready',
-        'post-init',
+        'postInit',
       ]);
     });
 
     it('should log no modules found when modules array is empty', async () => {
       mockFetch.mockResolvedValueOnce(mockFetchResponse(true, { modules: [] }));
-      await moduleLifecycleBoot({ app: mockApp });
+      await moduleLifecycleBoot();
       expect(consoleSpy.log).toHaveBeenCalledWith(
         '[Module Lifecycle] No enabled modules found'
       );
@@ -551,7 +545,7 @@ describe('Test: module-lifecycle', () => {
           mockFetchResponse(true, createMockModuleConfig())
         );
       loadRemote.mockRejectedValueOnce(new Error('Load failed'));
-      await moduleLifecycleBoot({ app: mockApp });
+      await moduleLifecycleBoot();
       expect(consoleSpy.log).toHaveBeenCalledWith(
         '[Module Lifecycle] No modules successfully loaded'
       );
@@ -563,13 +557,13 @@ describe('Test: module-lifecycle', () => {
         createMockModuleConfig(),
         createTrackedModule(executionOrder, 'setup')
       );
-      await moduleLifecycleBoot({ app: mockApp });
+      await moduleLifecycleBoot();
       expect(executionOrder).toEqual([
         'setup',
         'configure',
         'initialize',
         'ready',
-        'post-init',
+        'postInit',
       ]);
     });
 
@@ -599,21 +593,21 @@ describe('Test: module-lifecycle', () => {
           )
         );
       loadRemote.mockResolvedValueOnce(moduleA).mockResolvedValueOnce(moduleB);
-      await moduleLifecycleBoot({ app: mockApp });
+      await moduleLifecycleBoot();
       expect(getRegisteredModules().size).toBe(2);
       expect(executionOrderA).toEqual([
         'setup',
         'configure',
         'initialize',
         'ready',
-        'post-init',
+        'postInit',
       ]);
       expect(executionOrderB).toEqual([
         'setup',
         'configure',
         'initialize',
         'ready',
-        'post-init',
+        'postInit',
       ]);
     });
   });
