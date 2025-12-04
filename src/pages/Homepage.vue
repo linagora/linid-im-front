@@ -25,7 +25,12 @@
 -->
 
 <template>
-  <q-page>
-    <div class="text-h1">{{ $t('homepage.title.label') }}</div>
+  <q-page data-cy="home-page">
+    <div
+      class="text-h1"
+      data-cy="title"
+    >
+      {{ $t('homepage.title.label') }}
+    </div>
   </q-page>
 </template>
