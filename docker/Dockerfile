@@ -5,7 +5,7 @@ COPY . .
 ENV CI=true
 RUN rm -rf node_modules
 RUN pnpm install --frozen-lockfile
-RUN pnpm run build
+RUN pnpm build
 
 FROM nginx:stable-alpine
 RUN rm -rf /usr/share/nginx/html/*
