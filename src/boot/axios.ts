@@ -25,6 +25,7 @@
  */
 
 import { defineBoot } from '#q-app/wrappers';
+import { setHttpClient } from '@linagora/linid-im-front-corelib';
 import axios, { type AxiosInstance } from 'axios';
 
 declare module 'vue' {
@@ -53,6 +54,9 @@ const api = axios.create({ baseURL: '/api' });
  * @param app - The Vue application instance.
  */
 export default defineBoot(({ app }) => {
+  // Initialize the shared HTTP client for corelib and remote modules
+  setHttpClient(api);
+
   // for use inside Vue files (Options API) through this.$axios and this.$api
 
   app.config.globalProperties.$axios = axios;
