@@ -1,0 +1,19 @@
+{
+  "name": "@linagora/linid-im-mock-backend",
+  "version": "1.0.0",
+  "description": "Mock backend for LinID Identity Manager E2E tests",
+  "type": "module",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js"
+  },
+  "dependencies": {
+    "express": "4.21.0",
+    "cors": "2.8.5",
+    "zod": "3.23.8"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
