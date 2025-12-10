@@ -1,0 +1,22 @@
+name: dev
+
+services:
+  mock-backend:
+    build:
+      context: ../mock-backend
+      dockerfile: Dockerfile
+    container_name: linid-mock-backend
+    ports:
+      - "8080:8080"
+    env_file:
+      - .env.dev
+    healthcheck:
+      test: ["CMD", "wget", "-q", "--spider", "http://localhost:8080/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+    restart: unless-stopped
+
+networks:
+  default:
+    name: dev-network
