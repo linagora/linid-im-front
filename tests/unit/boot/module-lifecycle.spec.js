@@ -1,5 +1,5 @@
-import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { loadRemote } from '@module-federation/enhanced/runtime';
+import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 
 vi.mock('@module-federation/enhanced/runtime', () => ({
   loadRemote: vi.fn(),
