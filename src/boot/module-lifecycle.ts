@@ -24,14 +24,14 @@
  * LinID Identity Manager software.
  */
 
-import { defineBoot } from '@quasar/app-vite/wrappers';
-import { loadRemote } from '@module-federation/enhanced/runtime';
 import {
   ModuleLifecyclePhase,
   type ModuleLifecycleResult,
   type RemoteModule,
   type ModuleHostConfig,
 } from '@linagora/linid-im-front-corelib';
+import { loadRemote } from '@module-federation/enhanced/runtime';
+import { defineBoot } from '@quasar/app-vite/wrappers';
 
 /**
  * Registry of loaded remote modules.

@@ -24,9 +24,9 @@
  * LinID Identity Manager software.
  */
 
-import { defineBoot } from '#q-app/wrappers';
 import { setHttpClient } from '@linagora/linid-im-front-corelib';
 import axios, { type AxiosInstance } from 'axios';
+import { defineBoot } from '#q-app/wrappers';
 
 declare module 'vue' {
   /**

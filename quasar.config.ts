@@ -1,9 +1,9 @@
 // Configuration for your app
 // https://v2.quasar.dev/quasar-cli-vite/quasar-config-file
 
-import { defineConfig } from '#q-app/wrappers';
-import { federation } from '@module-federation/vite';
 import { fileURLToPath } from 'node:url';
+import { federation } from '@module-federation/vite';
+import { defineConfig } from '#q-app/wrappers';
 
 export default defineConfig((ctx) => {
   return {
