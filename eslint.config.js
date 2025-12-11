@@ -6,6 +6,7 @@ import {
   vueTsConfigs,
 } from '@vue/eslint-config-typescript';
 import headers from 'eslint-plugin-headers';
+import importPlugin from 'eslint-plugin-import';
 import jsdoc from 'eslint-plugin-jsdoc';
 import vue from 'eslint-plugin-vue';
 import globals from 'globals';
@@ -46,7 +47,30 @@ export default defineConfigWithVueTs(
   },
   {
     files: ['**/*.{js,mjs,cjs,ts,vue}'],
+    plugins: {
+      import: importPlugin,
+    },
     rules: {
+      // Import sorting
+      'import/order': [
+        'error',
+        {
+          groups: [
+            'builtin',
+            'external',
+            'internal',
+            'parent',
+            'sibling',
+            'index',
+          ],
+          'newlines-between': 'never',
+          alphabetize: {
+            order: 'asc',
+            caseInsensitive: true,
+          },
+        },
+      ],
+
       // Vue rules
       'vue/multi-word-component-names': 'off',
       'vue/require-default-prop': 'error',
