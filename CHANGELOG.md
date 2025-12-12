@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.7](https://github.com/linagora/linid-im-front/compare/v0.0.6...v0.0.7) (2025-12-12)
+
+
+### Features
+
+* add Express-based mock backend for metadata API ([d89093e](https://github.com/linagora/linid-im-front/commit/d89093e4f2b071a6b7e09518acc86124f55e7231))
+* **docker:** add development environment with Docker Compose ([f34f1da](https://github.com/linagora/linid-im-front/commit/f34f1da2ce420758c3543e7182dcd5f71207e1d5))
+* **eslint:** add import sorting with eslint-plugin-import ([d6ea405](https://github.com/linagora/linid-im-front/commit/d6ea405d3031985c3c7501a94315bcda393891a1))
+* initialize shared HTTP client from corelib ([e6562fe](https://github.com/linagora/linid-im-front/commit/e6562feb3a26c724ff4e1c18470a120732cba838))
+
 ### [0.0.6](https://github.com/linagora/linid-im-front/compare/v0.0.5...v0.0.6) (2025-12-04)
 
 
