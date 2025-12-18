@@ -87,7 +87,7 @@ public/remotes.json
 
 3. Refresh the application page.
 
-📝 *No build is required* — the host reloads remotes dynamically.
+📝 _No build is required_ — the host reloads remotes dynamically.
 
 ---
 
