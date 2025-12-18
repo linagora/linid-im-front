@@ -5,6 +5,10 @@ vi.mock('@module-federation/enhanced/runtime', () => ({
   loadRemote: vi.fn(),
 }));
 
+vi.mock('src/router/route-manager', () => ({
+  loadAndRegisterModuleRoutes: vi.fn(),
+}));
+
 const mockFetch = vi.fn();
 global.fetch = mockFetch;
 
@@ -17,7 +21,9 @@ describe('Test: module-lifecycle', () => {
     executePhaseForAllModules,
     executeLifecyclePhase,
     moduleLifecycleBoot,
-    consoleSpy;
+    loadAndRegisterModuleRoutes,
+    consoleSpy,
+    module;
 
   const createMockModule = (overrides = {}) => ({
     default: {
@@ -34,9 +40,13 @@ describe('Test: module-lifecycle', () => {
   });
 
   const createMockModuleConfig = (overrides = {}) => ({
-    id: 'test-module',
+    instanceId: 'test-module',
     remoteName: 'testRemote',
     ...overrides,
+  });
+
+  const createMockRouter = () => ({
+    addRoute: vi.fn(),
   });
 
   const mockFetchResponse = (ok, data) => ({
@@ -81,13 +91,24 @@ describe('Test: module-lifecycle', () => {
     vi.resetModules();
     mockFetch.mockReset();
     loadRemote.mockReset();
+    vi.doMock('@linagora/linid-im-front-corelib', async () => {
+      const actual = await vi.importActual('@linagora/linid-im-front-corelib');
+      return {
+        ...actual,
+        getModuleFederation: () => ({
+          loadRemote: loadRemote,
+        }),
+        setModuleFederation: vi.fn(),
+      };
+    });
     consoleSpy = {
       log: vi.spyOn(console, 'log').mockImplementation(() => {}),
       warn: vi.spyOn(console, 'warn').mockImplementation(() => {}),
       error: vi.spyOn(console, 'error').mockImplementation(() => {}),
       debug: vi.spyOn(console, 'debug').mockImplementation(() => {}),
     };
-    const module = await import('src/boot/module-lifecycle');
+    module = await import('src/boot/module-lifecycle');
+    const routeManagerModule = await import('src/router/route-manager');
     ({
       getCurrentPhase,
       getRegisteredModules,
@@ -98,6 +119,9 @@ describe('Test: module-lifecycle', () => {
       executeLifecyclePhase,
     } = module);
     moduleLifecycleBoot = module.default;
+    ({ loadAndRegisterModuleRoutes } = routeManagerModule);
+
+    loadAndRegisterModuleRoutes.mockResolvedValue(true);
   });
 
   afterEach(() => {
@@ -153,13 +177,16 @@ describe('Test: module-lifecycle', () => {
           mockFetchResponse(true, { modules: ['module-a.json'] })
         )
         .mockResolvedValueOnce(
-          mockFetchResponse(true, { id: 'module-a', remoteName: 'remoteA' })
+          mockFetchResponse(true, {
+            instanceId: 'module-a',
+            remoteName: 'remoteA',
+          })
         );
       const configs = await loadModuleConfigs();
       expect(mockFetch).toHaveBeenCalledWith('/modules.json');
       expect(mockFetch).toHaveBeenCalledWith('module-a.json');
       expect(configs).toHaveLength(1);
-      expect(configs[0].id).toBe('module-a');
+      expect(configs[0].instanceId).toBe('module-a');
       expect(consoleSpy.log).toHaveBeenCalledWith(
         '[Module Lifecycle] Loaded config for module: module-a'
       );
@@ -173,14 +200,23 @@ describe('Test: module-lifecycle', () => {
           })
         )
         .mockResolvedValueOnce(
-          mockFetchResponse(true, { id: 'module-a', remoteName: 'remoteA' })
+          mockFetchResponse(true, {
+            instanceId: 'module-a',
+            remoteName: 'remoteA',
+          })
         )
         .mockResolvedValueOnce(
-          mockFetchResponse(true, { id: 'module-b', remoteName: 'remoteB' })
+          mockFetchResponse(true, {
+            instanceId: 'module-b',
+            remoteName: 'remoteB',
+          })
         );
       const configs = await loadModuleConfigs();
       expect(configs).toHaveLength(2);
-      expect(configs.map((c) => c.id)).toEqual(['module-a', 'module-b']);
+      expect(configs.map((c) => c.instanceId)).toEqual([
+        'module-a',
+        'module-b',
+      ]);
     });
 
     it('should handle module config fetch failure gracefully', async () => {
@@ -218,13 +254,13 @@ describe('Test: module-lifecycle', () => {
         .mockResolvedValueOnce({ ok: false, status: 404 })
         .mockResolvedValueOnce(
           mockFetchResponse(true, {
-            id: 'working-module',
+            instanceId: 'working-module',
             remoteName: 'workingRemote',
           })
         );
       const configs = await loadModuleConfigs();
       expect(configs).toHaveLength(1);
-      expect(configs[0].id).toBe('working-module');
+      expect(configs[0].instanceId).toBe('working-module');
     });
   });
 
@@ -296,14 +332,14 @@ describe('Test: module-lifecycle', () => {
       );
     });
 
-    it('should warn when module id does not match host config id', async () => {
+    it('should warn when module id does not match host config instanceId', async () => {
       loadRemote.mockResolvedValueOnce(
         createMockModule({ id: 'different-id' })
       );
       await loadAndRegisterModule(
         'testRemote',
         'lifecycle',
-        createMockModuleConfig({ id: 'expected-id' })
+        createMockModuleConfig({ instanceId: 'expected-id' })
       );
       expect(consoleSpy.warn).toHaveBeenCalledWith(
         expect.stringContaining('Module ID mismatch')
@@ -400,7 +436,10 @@ describe('Test: module-lifecycle', () => {
       };
       await executeLifecyclePhase(module, 'configure');
       expect(module.configure).toHaveBeenCalledWith(
-        expect.objectContaining({ id: 'test-module', customSetting: 'value' })
+        expect.objectContaining({
+          instanceId: 'test-module',
+          customSetting: 'value',
+        })
       );
     });
   });
@@ -445,7 +484,7 @@ describe('Test: module-lifecycle', () => {
         'failingRemote',
         'lifecycle',
         createMockModuleConfig({
-          id: 'failing-module',
+          instanceId: 'failing-module',
           remoteName: 'failingRemote',
         })
       );
@@ -470,7 +509,7 @@ describe('Test: module-lifecycle', () => {
         'warningRemote',
         'lifecycle',
         createMockModuleConfig({
-          id: 'warning-module',
+          instanceId: 'warning-module',
           remoteName: 'warningRemote',
         })
       );
@@ -493,7 +532,7 @@ describe('Test: module-lifecycle', () => {
         'failingRemote',
         'lifecycle',
         createMockModuleConfig({
-          id: 'failing-module',
+          instanceId: 'failing-module',
           remoteName: 'failingRemote',
         })
       );
@@ -508,11 +547,12 @@ describe('Test: module-lifecycle', () => {
   describe('Integration: moduleLifecycleBoot', () => {
     it('should complete full lifecycle initialization with all phases in order', async () => {
       const executionOrder = [];
+      const mockRouter = createMockRouter();
       setupBootTest(
         createMockModuleConfig(),
         createTrackedModule(executionOrder)
       );
-      await moduleLifecycleBoot();
+      await moduleLifecycleBoot({ router: mockRouter });
       expect(consoleSpy.log).toHaveBeenCalledWith(
         '[Module Lifecycle] Starting module lifecycle initialization'
       );
@@ -529,14 +569,16 @@ describe('Test: module-lifecycle', () => {
     });
 
     it('should log no modules found when modules array is empty', async () => {
+      const mockRouter = createMockRouter();
       mockFetch.mockResolvedValueOnce(mockFetchResponse(true, { modules: [] }));
-      await moduleLifecycleBoot();
+      await moduleLifecycleBoot({ router: mockRouter });
       expect(consoleSpy.log).toHaveBeenCalledWith(
         '[Module Lifecycle] No enabled modules found'
       );
     });
 
     it('should log no modules loaded when all modules fail', async () => {
+      const mockRouter = createMockRouter();
       mockFetch
         .mockResolvedValueOnce(
           mockFetchResponse(true, { modules: ['module.json'] })
@@ -545,7 +587,7 @@ describe('Test: module-lifecycle', () => {
           mockFetchResponse(true, createMockModuleConfig())
         );
       loadRemote.mockRejectedValueOnce(new Error('Load failed'));
-      await moduleLifecycleBoot();
+      await moduleLifecycleBoot({ router: mockRouter });
       expect(consoleSpy.log).toHaveBeenCalledWith(
         '[Module Lifecycle] No modules successfully loaded'
       );
@@ -553,11 +595,12 @@ describe('Test: module-lifecycle', () => {
 
     it('should continue executing all phases even if one fails', async () => {
       const executionOrder = [];
+      const mockRouter = createMockRouter();
       setupBootTest(
         createMockModuleConfig(),
         createTrackedModule(executionOrder, 'setup')
       );
-      await moduleLifecycleBoot();
+      await moduleLifecycleBoot({ router: mockRouter });
       expect(executionOrder).toEqual([
         'setup',
         'configure',
@@ -570,6 +613,7 @@ describe('Test: module-lifecycle', () => {
     it('should handle multiple modules with mixed success and failure', async () => {
       const executionOrderA = [];
       const executionOrderB = [];
+      const mockRouter = createMockRouter();
       const moduleA = createTrackedModule(executionOrderA, 'configure');
       const moduleB = createTrackedModule(executionOrderB);
       moduleB.default.id = 'module-b';
@@ -583,17 +627,23 @@ describe('Test: module-lifecycle', () => {
         .mockResolvedValueOnce(
           mockFetchResponse(
             true,
-            createMockModuleConfig({ id: 'test-module', remoteName: 'remoteA' })
+            createMockModuleConfig({
+              instanceId: 'test-module',
+              remoteName: 'remoteA',
+            })
           )
         )
         .mockResolvedValueOnce(
           mockFetchResponse(
             true,
-            createMockModuleConfig({ id: 'module-b', remoteName: 'remoteB' })
+            createMockModuleConfig({
+              instanceId: 'module-b',
+              remoteName: 'remoteB',
+            })
           )
         );
       loadRemote.mockResolvedValueOnce(moduleA).mockResolvedValueOnce(moduleB);
-      await moduleLifecycleBoot();
+      await moduleLifecycleBoot({ router: mockRouter });
       expect(getRegisteredModules().size).toBe(2);
       expect(executionOrderA).toEqual([
         'setup',
@@ -609,6 +659,71 @@ describe('Test: module-lifecycle', () => {
         'ready',
         'postInit',
       ]);
+    });
+
+    it('should load module routes strictly after initialize phase and before ready phase', async () => {
+      const mockRouter = { addRoute: vi.fn() };
+      setupBootTest(createMockModuleConfig(), createMockModule());
+
+      const callOrder = [];
+      const originalExecutePhaseForAllModules = executePhaseForAllModules;
+      vi.spyOn(module, 'executePhaseForAllModules').mockImplementation(
+        async (phase) => {
+          callOrder.push(phase);
+          return originalExecutePhaseForAllModules(phase);
+        }
+      );
+      executePhaseForAllModules = module.executePhaseForAllModules;
+      loadAndRegisterModuleRoutes.mockImplementation(async () => {
+        callOrder.push('routes');
+        return true;
+      });
+
+      await moduleLifecycleBoot({ router: mockRouter });
+
+      // Check that 'routes' is called after 'initialize' and before 'ready' if those phases exist
+      const initializeIndex = callOrder.indexOf('initialize');
+      const routesIndex = callOrder.indexOf('routes');
+      const readyIndex = callOrder.indexOf('ready');
+
+      expect(routesIndex).toBeGreaterThan(-1);
+      if (initializeIndex !== -1) {
+        expect(initializeIndex).toBeLessThan(routesIndex);
+      }
+      if (readyIndex !== -1) {
+        expect(routesIndex).toBeLessThan(readyIndex);
+      }
+
+      expect(loadAndRegisterModuleRoutes).toHaveBeenCalledWith(
+        mockRouter,
+        'testRemote',
+        expect.objectContaining({
+          instanceId: 'test-module',
+          remoteName: 'testRemote',
+        })
+      );
+      expect(consoleSpy.log).toHaveBeenCalledWith(
+        '[Module Lifecycle] Loading module routes'
+      );
+    });
+
+    it('should continue to ready phase even if route loading fails', async () => {
+      const executionOrder = [];
+      const mockRouter = { addRoute: vi.fn() };
+      setupBootTest(
+        createMockModuleConfig(),
+        createTrackedModule(executionOrder)
+      );
+      loadAndRegisterModuleRoutes.mockResolvedValueOnce(false);
+      await moduleLifecycleBoot({ router: mockRouter });
+      expect(executionOrder).toEqual([
+        'setup',
+        'configure',
+        'initialize',
+        'ready',
+        'postInit',
+      ]);
+      expect(loadAndRegisterModuleRoutes).toHaveBeenCalled();
     });
   });
 });
