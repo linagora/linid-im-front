@@ -38,16 +38,16 @@ We follow the **Conventional Commits** specification:
 
 ### **Accepted types**
 
-* **feat** – Introduces, updates, or removes a feature in the API or UI
-* **fix** – Resolves a bug in the API or UI originating from a previous feature
-* **refactor** – Rewrites or restructures code without changing API or UI behavior
-* **perf** – A specialized refactor focused on improving performance
-* **style** – Addresses code style issues (e.g., whitespace, formatting, missing semicolons) without affecting behavior
-* **test** – Adds missing tests or updates existing tests
-* **docs** – Documentation-only changes
-* **build** – Modifies build-related components (tooling, dependencies, versioning, CI/CD, etc.)
-* **ops** – Changes to operational or infrastructure components (deployment, backup, recovery, etc.)
-* **chore** – Miscellaneous maintenance tasks (e.g., updating `.gitignore`)
+- **feat** – Introduces, updates, or removes a feature in the API or UI
+- **fix** – Resolves a bug in the API or UI originating from a previous feature
+- **refactor** – Rewrites or restructures code without changing API or UI behavior
+- **perf** – A specialized refactor focused on improving performance
+- **style** – Addresses code style issues (e.g., whitespace, formatting, missing semicolons) without affecting behavior
+- **test** – Adds missing tests or updates existing tests
+- **docs** – Documentation-only changes
+- **build** – Modifies build-related components (tooling, dependencies, versioning, CI/CD, etc.)
+- **ops** – Changes to operational or infrastructure components (deployment, backup, recovery, etc.)
+- **chore** – Miscellaneous maintenance tasks (e.g., updating `.gitignore`)
 
 ### **Examples**
 
@@ -85,9 +85,9 @@ Please keep this folder organized and up to date.
 
 We use **Mermaid** for architecture diagrams, flowcharts, sequence diagrams, etc.
 
-* Source files must be `.md` or `.mmd`
-* They must be stored in the `docs` directory
-* Generated images must be committed together with source files
+- Source files must be `.md` or `.mmd`
+- They must be stored in the `docs` directory
+- Generated images must be committed together with source files
 
 ### **Install Mermaid CLI**
 
@@ -244,10 +244,10 @@ Releases are fully automated using **Semantic Release**.
 
 When a merge is performed into `main`:
 
-* The version bump is automatically calculated from commit messages
-* `package.json` is updated
-* A changelog entry is generated
-* A Git tag is created
+- The version bump is automatically calculated from commit messages
+- `package.json` is updated
+- A changelog entry is generated
+- A Git tag is created
 
 ⚠ No manual intervention is needed.
 

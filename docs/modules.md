@@ -14,8 +14,8 @@ The `public/modules.json` file contains the list of modules that the host should
 Each entry in the array represents the **URL of a module configuration file**.
 A module entry can be:
 
-* a **relative path** → resolved from the project’s `public/` folder
-* an **absolute URL** → pointing to a remote module configuration file
+- a **relative path** → resolved from the project’s `public/` folder
+- an **absolute URL** → pointing to a remote module configuration file
 
 This allows modules to be served locally or remotely.
 
@@ -23,21 +23,18 @@ This allows modules to be served locally or remotely.
 
 ```json
 {
-  "modules": [
-    "module-a.json",
-    "https://cdn.example.com/modules/module-b.json"
-  ]
+  "modules": ["module-a.json", "https://cdn.example.com/modules/module-b.json"]
 }
 ```
 
 ### Resolution Rules
 
-* If the value **does not contain a hostname** (e.g., `module-a.json`, `configs/module-c.json`):
+- If the value **does not contain a hostname** (e.g., `module-a.json`, `configs/module-c.json`):
   👉 the host automatically resolves it relative to the project’s **`public/` directory**.
   Example:
   `module-a.json` → `public/module-a.json`
 
-* If the value **is a full URL**:
+- If the value **is a full URL**:
   👉 the host loads the configuration directly from that URL.
 
 ---
@@ -76,7 +73,7 @@ Even though the file name is not restricted, the configuration must include at l
 | ------------------------------ | -------------------------------------------------- |
 | **id**                         | Unique module identifier (kebab-case recommended). |
 | **remoteName**                 | Name used by Module Federation to load the remote. |
-| *(optional)* additional fields | Routes, plugins, injection zones, module options…  |
+| _(optional)_ additional fields | Routes, plugins, injection zones, module options…  |
 
 A complete specification of the module schema will be provided later.
 
@@ -102,11 +99,11 @@ The host dynamically loads the module’s Module Federation remote using the pro
 
 Each module exposes a `./lifecycle` entry which is executed through multiple phases:
 
-* **Setup** — The module validates required dependencies
-* **Configure** — The module receives its configuration object
-* **Initialize** — The module registers routes, state stores, components, or extensions
-* **Ready** — The module signals that it is fully initialized
-* **Post-Init** — Optional cross-module integrations
+- **Setup** — The module validates required dependencies
+- **Configure** — The module receives its configuration object
+- **Initialize** — The module registers routes, state stores, components, or extensions
+- **Ready** — The module signals that it is fully initialized
+- **Post-Init** — Optional cross-module integrations
 
 ### 5. **Activation**
 
@@ -170,8 +167,8 @@ This is expected when `modules.json` is empty.
 
 # 📝 **Important Notes**
 
-* All configuration files must contain **valid JSON**.
-* The host application does **not** require a rebuild to detect changes in module configuration.
-* File naming is flexible as long as the host can resolve the file for each module.
-* Modules are independent: their remotes are loaded dynamically.
-* Modules can be added, updated, or removed at runtime.
+- All configuration files must contain **valid JSON**.
+- The host application does **not** require a rebuild to detect changes in module configuration.
+- File naming is flexible as long as the host can resolve the file for each module.
+- Modules are independent: their remotes are loaded dynamically.
+- Modules can be added, updated, or removed at runtime.
