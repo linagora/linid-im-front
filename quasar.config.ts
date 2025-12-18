@@ -74,7 +74,7 @@ export default defineConfig((ctx) => {
             shared: {
               vue: {
                 singleton: true,
-                requiredVersion: '3.5.24',
+                requiredVersion: '3.5.25',
               },
               quasar: {
                 singleton: true,
