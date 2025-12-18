@@ -23,8 +23,8 @@ This guarantees that remote code is available before the module initialization f
 
 Responsible for loading and registering remote manifests from `public/remotes.json`.
 
-* Must run **before** the lifecycle system
-* Ensures each remote module can be dynamically imported
+- Must run **before** the lifecycle system
+- Ensures each remote module can be dynamically imported
 
 ---
 
@@ -36,8 +36,8 @@ Runs the complete lifecycle system:
 
 1. Reads the module list from `public/modules.json`
 2. Resolves the URL of each module configuration
+   - If no hostname is present, the file is resolved relative to `/public/`
 
-    * If no hostname is present, the file is resolved relative to `/public/`
 3. Loads and validates configuration files
 4. Loads each module’s remote lifecycle entry
 5. Executes all lifecycle phases across all enabled modules
@@ -75,9 +75,9 @@ Validate dependencies and ensure the module can run in the current environment.
 
 ### **Typical Actions**
 
-* Check required APIs or services
-* Validate external dependencies
-* Prepare initial internal state
+- Check required APIs or services
+- Validate external dependencies
+- Prepare initial internal state
 
 ---
 
@@ -89,9 +89,9 @@ Receive and validate the module’s configuration loaded from its JSON file.
 
 ### **Typical Actions**
 
-* Parse configuration options
-* Check required configuration fields
-* Store configuration for later phases
+- Parse configuration options
+- Check required configuration fields
+- Store configuration for later phases
 
 ---
 
@@ -103,9 +103,31 @@ Register all runtime contributions of the module.
 
 ### **Typical Actions**
 
-* Register state stores
-* Register components or UI extensions
-* Initialize services, listeners, or background processes
+- Register state stores
+- Register components or UI extensions
+- Initialize services, listeners, or background processes
+
+### **Route Loading**
+
+After all modules complete the **Initialize** phase, the host automatically loads and registers routes from each module:
+
+1. The host loads `${remoteName}/routes` via Module Federation
+2. Applies **Nunjucks templating** to route paths using the module's `ModuleHostConfig`
+3. Converts `LinidRoute[]` to Vue Router `RouteRecordRaw[]` using `loadAsyncComponent`
+4. Registers the routes in the Vue Router instance
+
+**Modules do not need to register routes manually** during the Initialize phase.
+
+```
+[Module Lifecycle] Starting initialize phase
+[Module Lifecycle] Completed initialize phase
+[Module Lifecycle] Loading module routes
+[Route Manager] Loading routes from myModule/routes
+[Route Manager] Registered route: /app/dashboard
+[Route Manager] Successfully registered 2 route(s) from myModule
+```
+
+For more details on route management, see the [Route Management Guide](./routes.md).
 
 ---
 
@@ -117,9 +139,9 @@ Signal that the module is fully operational.
 
 ### **Typical Actions**
 
-* Emit readiness events
-* Perform final validations
-* Notify the host system of operational status
+- Emit readiness events
+- Perform final validations
+- Notify the host system of operational status
 
 ---
 
@@ -131,9 +153,9 @@ Perform cross-module setup after all modules have reached the Ready phase.
 
 ### **Typical Actions**
 
-* Integrate with other modules
-* Exchange references or services
-* Finalize features that require all modules to be initialized
+- Integrate with other modules
+- Exchange references or services
+- Finalize features that require all modules to be initialized
 
 ---
 
@@ -149,9 +171,9 @@ interface ModuleLifecycleResult {
 }
 ```
 
-* A failure does **not** stop the remaining lifecycle for the module
-* Errors are logged but do not affect other modules
-* Invalid results are treated as successful to maintain system stability
+- A failure does **not** stop the remaining lifecycle for the module
+- Errors are logged but do not affect other modules
+- Invalid results are treated as successful to maintain system stability
 
 ---
 
@@ -191,11 +213,11 @@ Non-conforming results are treated as successful:
 
 The lifecycle system logs detailed information such as:
 
-* Configuration loading
-* Remote lifecycle loading
-* Phase execution start/end
-* Skipped or unimplemented hooks
-* Final lifecycle completion
+- Configuration loading
+- Remote lifecycle loading
+- Phase execution start/end
+- Skipped or unimplemented hooks
+- Final lifecycle completion
 
 Example debug messages:
 
