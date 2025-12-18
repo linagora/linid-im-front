@@ -25,13 +25,16 @@
  */
 
 import {
+  getModuleFederation,
   ModuleLifecyclePhase,
+  type FederatedModule,
+  type ModuleHostConfig,
   type ModuleLifecycleResult,
   type RemoteModule,
-  type ModuleHostConfig,
 } from '@linagora/linid-im-front-corelib';
-import { loadRemote } from '@module-federation/enhanced/runtime';
 import { defineBoot } from '@quasar/app-vite/wrappers';
+import { loadAndRegisterModuleRoutes } from 'src/router/route-manager';
+import type { Router } from 'vue-router';
 
 /**
  * Registry of loaded remote modules.
@@ -62,9 +65,10 @@ let currentPhase: ModuleLifecyclePhase | null = null;
  *
  * This orchestrates the loading and initialization of all business modules
  * by executing the five lifecycle phases in sequence.
+ * @param router - Vue Router instance.
  */
-export default defineBoot(async () => {
-  await initializeModuleLifecycle();
+export default defineBoot(async ({ router }) => {
+  await initializeModuleLifecycle(router);
 });
 
 /**
@@ -105,8 +109,9 @@ export function getModuleConfig(
  * 1. Load module configurations from /config directory
  * 2. Load all modules via Module Federation
  * 3. Execute the five lifecycle phases in sequence.
+ * @param router - Vue Router instance.
  */
-async function initializeModuleLifecycle(): Promise<void> {
+async function initializeModuleLifecycle(router: Router): Promise<void> {
   console.log('[Module Lifecycle] Starting module lifecycle initialization');
 
   const moduleConfigs = await loadModuleConfigs();
@@ -133,6 +138,31 @@ async function initializeModuleLifecycle(): Promise<void> {
   await executePhaseForAllModules(ModuleLifecyclePhase.SETUP);
   await executePhaseForAllModules(ModuleLifecyclePhase.CONFIGURE);
   await executePhaseForAllModules(ModuleLifecyclePhase.INITIALIZE);
+
+  console.log('[Module Lifecycle] Loading module routes');
+  const registeredConfig = Array.from(moduleConfigRegistry.values());
+  const routeLoadResults = await Promise.allSettled(
+    registeredConfig.map((config) =>
+      loadAndRegisterModuleRoutes(router, config.remoteName, config)
+    )
+  );
+
+  registeredConfig.forEach((config, idx) => {
+    const result = routeLoadResults[idx];
+    if (!result) {
+      return;
+    }
+    if (
+      result.status === 'rejected' ||
+      (result.status === 'fulfilled' && !result.value)
+    ) {
+      console.warn(
+        `[Module Lifecycle] Failed to load routes for module: ${config.remoteName}`,
+        result.status === 'rejected' ? result.reason : undefined
+      );
+    }
+  });
+
   await executePhaseForAllModules(ModuleLifecyclePhase.READY);
   await executePhaseForAllModules(ModuleLifecyclePhase.POST_INIT);
 
@@ -171,7 +201,7 @@ export async function loadModuleConfigs(): Promise<ModuleHostConfig[]> {
 
           moduleConfigs.push(config);
           console.log(
-            `[Module Lifecycle] Loaded config for module: ${config.id}`
+            `[Module Lifecycle] Loaded config for module: ${config.instanceId}`
           );
         } else {
           console.warn(
@@ -215,12 +245,9 @@ export async function loadAndRegisterModule(
     const remoteKey = `${remoteName}/${modulePath}`;
     console.log(`[Module Lifecycle] Loading module: ${remoteKey}`);
 
-    const module = await loadRemote<{
-      /**
-       * Default export of the remote module.
-       */
-      default: RemoteModule;
-    }>(remoteKey);
+    const mf = getModuleFederation();
+    const module =
+      await mf.loadRemote<FederatedModule<RemoteModule>>(remoteKey);
 
     if (!module?.default) {
       throw new Error(`Module ${remoteKey} does not export a default module`);
@@ -234,14 +261,14 @@ export async function loadAndRegisterModule(
       );
     }
 
-    if (remoteModule.id !== hostConfig.id) {
+    if (remoteModule.id !== hostConfig.instanceId) {
       console.warn(
-        `[Module Lifecycle] Module ID mismatch: expected "${hostConfig.id}", got "${remoteModule.id}"`
+        `[Module Lifecycle] Module ID mismatch: expected "${hostConfig.instanceId}", got "${remoteModule.id}"`
       );
     }
 
     moduleRegistry.set(remoteModule.id, remoteModule);
-    moduleConfigRegistry.set(hostConfig.id, hostConfig);
+    moduleConfigRegistry.set(hostConfig.instanceId, hostConfig);
 
     console.log(
       `[Module Lifecycle] Registered module: ${remoteModule.id} (${remoteModule.name})`

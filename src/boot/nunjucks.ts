@@ -24,37 +24,12 @@
  * LinID Identity Manager software.
  */
 
-import { setModuleFederation } from '@linagora/linid-im-front-corelib';
-import {
-  getInstance,
-  registerRemotes,
-} from '@module-federation/enhanced/runtime';
-import { defineBoot } from '@quasar/app-vite/wrappers';
+import nunjucks from 'nunjucks';
 
 /**
- * Boot file that registers remote Module Federation modules.
- *
- * Fetches the remotes configuration from /remotes.json and registers
- * them with the Module Federation runtime.
- * @throws {Error} When the remotes.json file cannot be fetched.
+ * Nunjucks environment for template rendering.
+ * Configured to auto-escape false for path rendering.
  */
-export default defineBoot(async () => {
-  const response = await fetch('/remotes.json');
+const nunjucksEnv = nunjucks.configure({ autoescape: false });
 
-  if (!response.ok) {
-    throw new Error('Failed to fetch manifest');
-  }
-
-  const remotesJson: Record<string, string> = await response.json();
-  const remotes = Object.entries(remotesJson).map(([name, entry]) => ({
-    name,
-    entry,
-  }));
-
-  registerRemotes(remotes);
-  const mfInstance = getInstance();
-  if (!mfInstance) {
-    throw new Error('Module Federation instance is not initialized');
-  }
-  setModuleFederation(mfInstance);
-});
+export default nunjucksEnv;
