@@ -73,6 +73,13 @@ Explains how feature modules are declared, activated, organized, and displayed i
 
 ---
 
+### 🛣️ **Route Management Guide**
+
+Explains how the host automatically loads and registers routes from remote modules with Nunjucks templating support.
+→ [`routes.md`](docs/routes.md)
+
+---
+
 > More documentation will be added as the host evolves.
 
 ---
