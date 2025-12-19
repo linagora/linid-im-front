@@ -45,16 +45,9 @@ export default defineBoot(async () => {
     throw new Error('Failed to fetch manifest');
   }
 
-  const remotesJson: Record<string, string> = await response.json();
-  const remotes = Object.entries(remotesJson).map(([name, entry]) => ({
-    name,
-    entry,
-  }));
+  const remotes = await response.json();
 
   registerRemotes(remotes);
-  const mfInstance = getInstance();
-  if (!mfInstance) {
-    throw new Error('Module Federation instance is not initialized');
-  }
-  setModuleFederation(mfInstance);
+
+  setModuleFederation(getInstance()!);
 });

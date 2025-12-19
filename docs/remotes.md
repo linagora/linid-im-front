@@ -27,28 +27,37 @@ No rebuild is needed when modifying `remotes.json`.
 
 ## **📁 File Format: `remotes.json`**
 
-Each entry maps a remote **name** to its **manifest URL**:
+An array of objects, each specifying a remote module’s name and the URL of its manifest file:
 
 ```json
-{
-  "remoteName": "https://remote-host/mf-manifest.json"
-}
+[
+  {
+    "name": "remoteName",
+    "entry": "https://remote-host/mf-manifest.json"
+  }
+]
 ```
 
 ### **Example — Development**
 
 ```json
-{
-  "catalogUI": "http://localhost:5001/mf-manifest.json"
-}
+[
+  {
+    "name": "catalogUI",
+    "entry": "http://localhost:5001/mf-manifest.json"
+  }
+]
 ```
 
 ### **Example — Production**
 
 ```json
-{
-  "catalogUI": "https://plugins.company.com/catalog-ui/mf-manifest.json"
-}
+[
+  {
+    "name": "catalogUI",
+    "entry": "https://plugins.company.com/catalog-ui/mf-manifest.json"
+  }
+]
 ```
 
 ---
@@ -80,9 +89,12 @@ public/remotes.json
 2. Add or modify a remote entry:
 
 ```json
-{
-  "myNewRemote": "https://remote.example.com/mf-manifest.json"
-}
+[
+  {
+    "name": "myNewRemote",
+    "entry": "https://remote.example.com/mf-manifest.json"
+  }
+]
 ```
 
 3. Refresh the application page.
