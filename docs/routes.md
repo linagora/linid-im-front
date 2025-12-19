@@ -8,7 +8,7 @@ The LinID host application provides an automated route management system that dy
 
 Each remote module can export its own routes, and the host automatically:
 
-1. Loads routes after the **Initialize** lifecycle phase
+1. Loads routes during the **Configure** lifecycle phase
 2. Applies **Nunjucks templating** to route paths
 3. Converts routes to Vue Router format
 4. Registers them dynamically
