@@ -1,3 +1,10 @@
-{
-  "catalogUI": "http://localhost:5001/mf-manifest.json"
-}
+[
+  {
+    "name": "catalogUI",
+    "entry": "http://localhost:5001/mf-manifest.json"
+  },
+  {
+    "name": "moduleUsers",
+    "entry": "http://localhost:5002/mf-manifest.json"
+  }
+]
