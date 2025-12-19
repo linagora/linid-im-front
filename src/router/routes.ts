@@ -25,11 +25,16 @@
  */
 
 import type { RouteRecordRaw } from 'vue-router';
+import { type FederatedModule } from '@linagora/linid-im-front-corelib';
+import { loadRemote } from '@module-federation/enhanced/runtime';
+import type { Component } from 'vue';
 
 const routes: RouteRecordRaw[] = [
   {
     path: '/',
-    component: () => import('layouts/MainLayout.vue'),
+    component: async () =>
+      (await loadRemote<FederatedModule<Component>>('catalogUI/BaseLayout'))!
+        .default,
     children: [{ path: '', component: () => import('pages/Homepage.vue') }],
   },
 ];
