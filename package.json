@@ -1,6 +1,6 @@
 {
   "name": "@linagora/linid-im-front",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "The host app of LinID - Identity Manager",
   "productName": "LinID - Identity Manager",
   "contributors": [

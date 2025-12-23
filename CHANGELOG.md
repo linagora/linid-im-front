@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.9](https://github.com/linagora/linid-im-front/compare/v0.0.8...v0.0.9) (2025-12-23)
+
+
+### Features
+
+* add module-users in default module ([b228370](https://github.com/linagora/linid-im-front/commit/b22837071f713fb5bd98587533bdec74a1134a8b))
+* use default BaseLayout of catalogUI ([a952548](https://github.com/linagora/linid-im-front/commit/a9525480b97d127ac899d7f56de497a4f1605de0))
+
 ### [0.0.8](https://github.com/linagora/linid-im-front/compare/v0.0.7...v0.0.8) (2025-12-19)
 
 
