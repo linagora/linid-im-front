@@ -1,0 +1,18 @@
+{
+  "default": {
+    "q-btn": {
+      "dense": true,
+      "outline": true,
+      "color": "primary",
+      "noCaps": true
+    },
+    "q-tabs": {
+      "dense": true,
+      "align": "center",
+      "noCaps": true
+    },
+    "q-table": {
+      "dense": true
+    }
+  }
+}
