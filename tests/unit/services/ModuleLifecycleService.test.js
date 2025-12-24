@@ -17,6 +17,7 @@ vi.mock('@module-federation/enhanced/runtime', () => ({
 vi.mock('@linagora/linid-im-front-corelib', () => ({
   registerModuleHostConfiguration: vi.fn(),
   loadAsyncComponent: vi.fn(),
+  renameKeys: () => null,
 }));
 
 global.fetch = vi.fn();

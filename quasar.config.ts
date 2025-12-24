@@ -130,7 +130,7 @@ export default defineConfig((ctx) => {
       https: true,
       proxy: {
         '/api': {
-          target: 'https://localhost:8443',
+          target: 'http://localhost:8080',
           changeOrigin: true,
           secure: false,
           rewrite: (path) => path.replace(/^\/api/, ''),
