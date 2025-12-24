@@ -13,17 +13,19 @@ docker build -t linid-mock-backend docker/mock-backend/
 docker container prune -f
 
 # Run
-docker compose -f docker/dev/docker-compose.yml up
+docker compose -f docker/dev/docker-compose.yml --env-files docker/dev/.env up
 ```
 
 ## Available Endpoints
 
-| Method | Path                         | Description                       |
-| ------ | ---------------------------- | --------------------------------- |
-| GET    | `/health`                    | Health check                      |
-| GET    | `/metadata/routes`           | Returns all route configurations  |
-| GET    | `/metadata/entities`         | Returns all entity configurations |
-| GET    | `/metadata/entities/:entity` | Returns a specific entity config  |
+| Method | Path                         | Description                              |
+| ------ | ---------------------------- | ---------------------------------------- |
+| GET    | `/health`                    | Health check                             |
+| GET    | `/metadata/routes`           | Returns all route configurations         |
+| GET    | `/metadata/entities`         | Returns all entity configurations        |
+| GET    | `/metadata/entities/:entity` | Returns a specific entity config         |
+| GET    | `/i18n/languages`            | Returns managed languages                |
+| GET    | `/i18n/:lang.json`           | Returns messages for a specific language |
 
 ## Testing Endpoints
 
@@ -57,4 +59,5 @@ All responses are validated against Zod schemas to ensure compatibility with `li
 - `LinIdEntityConfiguration`
 - `LinIdAttributeConfiguration`
 
-See [linid-im-api-corelib documentation](https://github.com/linagora/linid-im-api-corelib/blob/main/docs/plugins/example-config.yaml) for the official schema reference.
+See [linid-im-api-corelib documentation](https://github.com/linagora/linid-im-api-corelib/blob/main/docs/plugins/example-config.yaml)
+for the official schema reference.

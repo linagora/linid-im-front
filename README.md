@@ -80,6 +80,13 @@ Explains how the host automatically loads and registers routes from remote modul
 
 ---
 
+### 🌐 **i18n Management Guide**
+
+Explains how the host loads, initializes, and manages translations dynamically using JSON files, and how components can access and switch locales.
+→ [`i18n.md`](docs/i18n.md)
+
+---
+
 > More documentation will be added as the host evolves.
 
 ---

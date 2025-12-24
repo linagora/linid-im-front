@@ -24,8 +24,14 @@
  * LinID Identity Manager software.
  */
 
-import messages from 'src/i18n';
-import { createI18n } from 'vue-i18n';
+import {
+  fromDot,
+  merge,
+  setI18nInstance,
+} from '@linagora/linid-im-front-corelib';
+import { api } from 'boot/axios';
+import type messages from 'src/i18n';
+import { createI18n, type I18n } from 'vue-i18n';
 import { defineBoot } from '#q-app/wrappers';
 
 /**
@@ -56,15 +62,45 @@ declare module 'vue-i18n' {
    */
   export interface DefineNumberFormat {}
 }
-/* eslint-enable @typescript-eslint/no-empty-object-type */
 
-export default defineBoot(({ app }) => {
+/* eslint-enable @typescript-eslint/no-empty-object-type */
+export default defineBoot(async ({ app }) => {
+  const i18nConfig: {
+    /**
+     * Array of supported language codes.
+     */
+    languages: string[];
+    /**
+     * Default locale of the application.
+     */
+    locale: string;
+  } = await fetch('/i18n.json').then((res) => res.json());
+
+  const messages: Record<string, unknown> = {};
+
+  for (const lang of i18nConfig.languages) {
+    const appMessages = await fetch(`/i18n/${lang}.json`)
+      .then((res) => res.json())
+      .catch(() => ({}));
+    const apiMessages = await api
+      .get(`/i18n/${lang}.json`)
+      .then(({ data }) => fromDot(data))
+      .catch(() => ({}));
+
+    messages[lang] = merge(apiMessages, appMessages);
+  }
+
   // eslint-disable-next-line jsdoc/require-jsdoc
   const i18n = createI18n<{ message: MessageSchema }, MessageLanguages>({
-    locale: 'en-US',
+    locale: i18nConfig.locale,
     legacy: false,
+    fallbackLocale: i18nConfig.languages[0],
+    // @ts-expect-error 'messages' type is not compatible with the expected type of createI18n,
+    // but we know it matches the schema at runtime
     messages,
-  });
+  }) as I18n;
+
+  setI18nInstance(i18n);
 
   // Set i18n instance on app
   app.use(i18n);

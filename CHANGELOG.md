@@ -4,25 +4,22 @@ All notable changes to this project will be documented in this file. See [standa
 
 ### [0.0.10](https://github.com/linagora/linid-im-front/compare/v0.0.9...v0.0.10) (2026-01-05)
 
-
 ### Features
 
-* load and configure ui-design ([958e760](https://github.com/linagora/linid-im-front/commit/958e760627c53dae74113f1ff5a8b8566e4642df))
+- load and configure ui-design ([958e760](https://github.com/linagora/linid-im-front/commit/958e760627c53dae74113f1ff5a8b8566e4642df))
 
 ### [0.0.9](https://github.com/linagora/linid-im-front/compare/v0.0.8...v0.0.9) (2025-12-23)
 
-
 ### Features
 
-* add module-users in default module ([b228370](https://github.com/linagora/linid-im-front/commit/b22837071f713fb5bd98587533bdec74a1134a8b))
-* use default BaseLayout of catalogUI ([a952548](https://github.com/linagora/linid-im-front/commit/a9525480b97d127ac899d7f56de497a4f1605de0))
+- add module-users in default module ([b228370](https://github.com/linagora/linid-im-front/commit/b22837071f713fb5bd98587533bdec74a1134a8b))
+- use default BaseLayout of catalogUI ([a952548](https://github.com/linagora/linid-im-front/commit/a9525480b97d127ac899d7f56de497a4f1605de0))
 
 ### [0.0.8](https://github.com/linagora/linid-im-front/compare/v0.0.7...v0.0.8) (2025-12-19)
 
-
 ### Features
 
-* **router:** implement dynamic route management with Nunjucks templating ([1d7c538](https://github.com/linagora/linid-im-front/commit/1d7c5384abfe2a4614ef59008c37a62d9cfbf036))
+- **router:** implement dynamic route management with Nunjucks templating ([1d7c538](https://github.com/linagora/linid-im-front/commit/1d7c5384abfe2a4614ef59008c37a62d9cfbf036))
 
 ### [0.0.7](https://github.com/linagora/linid-im-front/compare/v0.0.6...v0.0.7) (2025-12-12)
 

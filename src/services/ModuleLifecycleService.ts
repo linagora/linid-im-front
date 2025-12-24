@@ -30,7 +30,12 @@ import type {
   ModuleHostConfig,
   RemoteModule,
 } from '@linagora/linid-im-front-corelib';
-import { registerModuleHostConfiguration } from '@linagora/linid-im-front-corelib';
+import {
+  getI18nInstance,
+  merge,
+  registerModuleHostConfiguration,
+  renameKeys,
+} from '@linagora/linid-im-front-corelib';
 import { loadRemote } from '@module-federation/enhanced/runtime';
 import nunjucksEnv from 'boot/nunjucks';
 import type { Component } from 'vue';
@@ -133,6 +138,23 @@ async function getRoutes(
 }
 
 /**
+ * Fetches i18n messages from a remote module.
+ * @param config - Configuration object for the remote module.
+ * @returns A promise that resolves to the i18n messages object. Returns an empty object if no messages are found.
+ */
+async function getI18nMessages(config: ModuleHostConfig): Promise<object> {
+  const messages = await loadRemote<FederatedModule<object>>(
+    `${config.remoteName}/i18n`
+  );
+
+  if (!messages?.default) {
+    return {};
+  }
+
+  return messages.default;
+}
+
+/**
  * Converts a LinidRoute to a Vue Router RouteRecordRaw.
  *
  * Applies Nunjucks templating to paths and loads components asynchronously
@@ -209,6 +231,29 @@ export async function configure(
     routes
       .map((route) => toRouteRecordRaw(route, config))
       .forEach(boot.router.addRoute);
+  }
+
+  const i18nMessages = renameKeys(
+    await getI18nMessages(config),
+    (key: string) => nunjucksEnv.renderString(key, config)
+  );
+
+  if (i18nMessages) {
+    const i18n = getI18nInstance();
+
+    // @ts-expect-error vue-i18n types expose `global.messages` as `ComputedRef | object`.
+    // At runtime this is always a ComputedRef, but TypeScript cannot infer it safely.
+    Object.keys(i18n.global.messages.value).forEach((lang: string) => {
+      const messages = merge(
+        // @ts-expect-error `i18nMessages` is a dynamically loaded object indexed by locale.
+        // The index signature is not known at compile time.
+        i18nMessages[lang],
+        // @ts-expect-error Same typing issue: `messages` is inferred as `{}` without a string index signature by vue-i18n.
+        i18n.global.messages.value[lang]
+      );
+
+      i18n.global.setLocaleMessage(lang, messages);
+    });
   }
 
   return module.configure(config);
