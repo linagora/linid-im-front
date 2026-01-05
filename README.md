@@ -87,6 +87,13 @@ Explains how the host loads, initializes, and manages translations dynamically u
 
 ---
 
+### 🎨 **Design Management Guide**
+
+Explains how global Quasar component defaults are configured via a JSON file, ensuring consistent styling and behavior across the application.
+→ [`design.md`](docs/design.md)
+
+---
+
 > More documentation will be added as the host evolves.
 
 ---
