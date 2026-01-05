@@ -7,6 +7,7 @@ import {
   initialize,
   ready,
   postInit,
+  renderMeta,
 } from 'src/services/ModuleLifecycleService';
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 
@@ -137,6 +138,85 @@ describe('Test service: ModuleLifecycleService', () => {
       const result = await postInit(mockModule, mockConfig, mockBoot);
       expect(mockModule.postInit).toHaveBeenCalled();
       expect(result).toBe('postInit-done');
+    });
+  });
+
+  describe('Test function: renderMeta', () => {
+    const config = {
+      id: 'my-module',
+      userName: 'Alice',
+      defaultRole: 'editor',
+    };
+
+    it('renders a simple string', () => {
+      const input = 'Dashboard for {{ config.id }}';
+      const output = renderMeta(input, config);
+      expect(output).toBe('Dashboard for my-module');
+    });
+
+    it('renders strings inside an object', () => {
+      const input = {
+        title: 'Hello {{ config.userName }}',
+        requiresAuth: true,
+      };
+      const output = renderMeta(input, config);
+      expect(output).toEqual({
+        title: 'Hello Alice',
+        requiresAuth: true,
+      });
+    });
+
+    it('renders strings inside a nested object', () => {
+      const input = {
+        layout: {
+          header: 'Welcome {{ config.userName }}',
+          footer: 'Module {{ config.id }}',
+        },
+        roles: ['admin', '{{ config.defaultRole }}'],
+      };
+      const output = renderMeta(input, config);
+      expect(output).toEqual({
+        layout: { header: 'Welcome Alice', footer: 'Module my-module' },
+        roles: ['admin', 'editor'],
+      });
+    });
+
+    it('renders strings inside an array', () => {
+      const input = ['user: {{ config.userName }}', 'module: {{ config.id }}'];
+      const output = renderMeta(input, config);
+      expect(output).toEqual(['user: Alice', 'module: my-module']);
+    });
+
+    it('keeps numbers, booleans and null unchanged', () => {
+      const input = { count: 5, active: true, missing: null };
+      const output = renderMeta(input, config);
+      expect(output).toEqual({ count: 5, active: true, missing: null });
+    });
+
+    it('handles empty objects and arrays', () => {
+      expect(renderMeta({}, config)).toEqual({});
+      expect(renderMeta([], config)).toEqual([]);
+    });
+
+    it('handles deeply nested mixed objects and arrays', () => {
+      const input = {
+        users: [
+          {
+            name: '{{ config.userName }}',
+            roles: ['{{ config.defaultRole }}'],
+          },
+          { name: 'Bob', roles: ['admin'] },
+        ],
+        module: '{{ config.id }}',
+      };
+      const output = renderMeta(input, config);
+      expect(output).toEqual({
+        users: [
+          { name: 'Alice', roles: ['editor'] },
+          { name: 'Bob', roles: ['admin'] },
+        ],
+        module: 'my-module',
+      });
     });
   });
 });

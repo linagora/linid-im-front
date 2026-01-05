@@ -39,7 +39,7 @@ import {
 import { loadRemote } from '@module-federation/enhanced/runtime';
 import nunjucksEnv from 'boot/nunjucks';
 import type { Component } from 'vue';
-import type { RouteRecordRaw } from 'vue-router';
+import type { RouteMeta, RouteRecordRaw } from 'vue-router';
 import type { BootFileParams } from '#q-app';
 
 /**
@@ -173,7 +173,41 @@ export function toRouteRecordRaw(
       (await loadRemote<FederatedModule<Component>>(route.component))!.default,
     children:
       route.children?.map((child) => toRouteRecordRaw(child, config)) || [],
+    meta: route.meta
+      ? (renderMeta(route.meta, config) as RouteMeta)
+      : undefined,
   };
+}
+
+/**
+ * Recursively renders all string values in an object or array using Nunjucks templating.
+ *
+ * This is useful for processing route `meta` objects so that template variables
+ * (like `{{ config.basePath }}`) are replaced with actual values from the module host configuration.
+ * @param obj - The object, array, or string to render. Can be nested.
+ * @param config - The ModuleHostConfig object used as the template context.
+ * @returns A new object/array/string with all strings rendered using Nunjucks.
+ */
+export function renderMeta(obj: unknown, config: ModuleHostConfig): unknown {
+  if (typeof obj === 'string') {
+    return nunjucksEnv.renderString(obj, { config });
+  }
+
+  if (Array.isArray(obj)) {
+    return obj.map((v) => renderMeta(v, config));
+  }
+
+  if (typeof obj === 'object' && obj !== null) {
+    const result: Record<string, unknown> = {};
+
+    for (const key in obj) {
+      result[key] = renderMeta((obj as Record<string, unknown>)[key], config);
+    }
+
+    return result;
+  }
+
+  return obj; // number, boolean, etc.
 }
 
 /**
