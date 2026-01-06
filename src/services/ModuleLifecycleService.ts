@@ -306,16 +306,16 @@ export async function configure(
  *
  * This phase is executed after CONFIGURE and before READY.
  * @param module - The remote module lifecycle implementation.
- * @param _config - The host configuration associated with this module instance.
+ * @param config - The host configuration associated with this module instance.
  * @param _boot - The application boot context.
  * @returns A promise resolving to the module's initialization result.
  */
 export async function initialize(
   module: RemoteModule,
-  _config: ModuleHostConfig,
+  config: ModuleHostConfig,
   _boot: BootFileParams
 ) {
-  return module.initialize();
+  return module.initialize(config);
 }
 
 /**
@@ -332,16 +332,16 @@ export async function initialize(
  * - Emitting ready events.
  * - Performing final validation.
  * @param module - The remote module lifecycle implementation.
- * @param _config - The host configuration associated with this module instance.
+ * @param config - The host configuration associated with this module instance.
  * @param _boot - The application boot context.
  * @returns A promise resolving to the module's ready result.
  */
 export async function ready(
   module: RemoteModule,
-  _config: ModuleHostConfig,
+  config: ModuleHostConfig,
   _boot: BootFileParams
 ) {
-  return module.ready();
+  return module.ready(config);
 }
 
 /**
@@ -354,14 +354,14 @@ export async function ready(
  * - Late-bound dependencies.
  * - Final application wiring that requires all modules to be available.
  * @param module - The remote module lifecycle implementation.
- * @param _config - The host configuration associated with this module instance.
+ * @param config - The host configuration associated with this module instance.
  * @param _boot - The application boot context.
  * @returns A promise resolving to the module's post-initialization result.
  */
 export async function postInit(
   module: RemoteModule,
-  _config: ModuleHostConfig,
+  config: ModuleHostConfig,
   _boot: BootFileParams
 ) {
-  return module.postInit();
+  return module.postInit(config);
 }
