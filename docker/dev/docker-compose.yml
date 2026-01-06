@@ -2,9 +2,7 @@ name: dev
 
 services:
   mock-backend:
-    build:
-      context: ../mock-backend
-      dockerfile: Dockerfile
+    image: linid-mock-backend
     container_name: linid-mock-backend
     ports:
       - "8080:8080"

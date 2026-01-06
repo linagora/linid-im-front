@@ -13,13 +13,13 @@ docker build -t linid-mock-backend docker/mock-backend/
 docker container prune -f
 
 # Run
-docker compose -f docker/dev/docker-compose.yml --env-files docker/dev/.env up
+docker compose -f docker/dev/docker-compose.yml --env-file docker/dev/.env up
 ```
 
 ## Available Endpoints
 
 | Method | Path                         | Description                              |
-| ------ | ---------------------------- | ---------------------------------------- |
+|--------|------------------------------|------------------------------------------|
 | GET    | `/health`                    | Health check                             |
 | GET    | `/metadata/routes`           | Returns all route configurations         |
 | GET    | `/metadata/entities`         | Returns all entity configurations        |
@@ -48,7 +48,7 @@ curl http://localhost:8080/metadata/entities/user
 Environment variables can be defined in the `.env.dev` file:
 
 | Variable | Default | Description |
-| -------- | ------- | ----------- |
+|----------|---------|-------------|
 | `PORT`   | `8080`  | Server port |
 
 ## Schema Validation
