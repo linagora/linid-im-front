@@ -2,6 +2,7 @@ import cors from 'cors';
 import express from 'express';
 import i18n from './data/i18n.js';
 import metadataRoutes from './routes/metadata.js';
+import users from './data/users.js';
 
 const app = express();
 const PORT = process.env.PORT || 8080;
@@ -27,6 +28,10 @@ app.get('/i18n/:lang.json', (req, res) => {
   res.status(200).json(i18n[req.params.lang]);
 });
 
+app.get('/api/users', (_req, res) => {
+  res.status(200).json(users);
+});
+
 // Error handler
 app.use((err, _req, res, _next) => {
   console.error('[Mock Backend] Error:', err.message);
@@ -49,4 +54,5 @@ app.listen(PORT, () => {
   console.log(`  - GET /metadata/entities/:entity`);
   console.log(`  - GET /i18n/languages`);
   console.log(`  - GET /i18n/:lang.json`);
+  console.log(`  - GET /api/users`);
 });

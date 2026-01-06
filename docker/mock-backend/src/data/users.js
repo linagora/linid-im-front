@@ -1,0 +1,38 @@
+export default {
+  content: [
+    {
+      id: '00000000-0000-0000-0000-000000000000',
+      email: 'john.doe@gmail.com',
+      firstName: 'John',
+      lastName: 'Doe',
+      displayName: 'John Doe',
+      enabled: true,
+      role: 'admin',
+    },
+    {
+      id: '00000000-0000-0000-0000-000000000001',
+      email: 'jane.roe@gmail.com',
+      firstName: 'Jane',
+      lastName: 'Roe',
+      displayName: 'Jane Roe',
+      enabled: true,
+      role: 'user',
+    },
+  ],
+  pageable: {
+    pageNumber: 0,
+    pageSize: 2,
+    offset: 0,
+    paged: true,
+    unpaged: false,
+  },
+  totalElements: 2,
+  totalPages: 1,
+  last: true,
+  first: true,
+  numberOfElements: 2,
+  sort: { sorted: false, unsorted: true, empty: true },
+  size: 2,
+  number: 0,
+  empty: false,
+};
