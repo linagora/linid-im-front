@@ -269,7 +269,7 @@ export async function configure(
 
   const i18nMessages = renameKeys(
     await getI18nMessages(config),
-    (key: string) => nunjucksEnv.renderString(key, config)
+    (key: string) => nunjucksEnv.renderString(key, { config })
   );
 
   if (i18nMessages) {
