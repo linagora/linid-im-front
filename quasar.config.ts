@@ -76,6 +76,10 @@ export default defineConfig((ctx) => {
                 singleton: true,
                 requiredVersion: '3.5.25',
               },
+              'vue-router': {
+                singleton: true,
+                requiredVersion: '4.6.4',
+              },
               quasar: {
                 singleton: true,
                 requiredVersion: '2.18.6',
