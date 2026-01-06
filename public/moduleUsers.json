@@ -1,4 +1,5 @@
 {
   "instanceId": "moduleUsers",
-  "remoteName": "moduleUsers"
+  "remoteName": "moduleUsers",
+  "apiEndpoint": "api/users"
 }
