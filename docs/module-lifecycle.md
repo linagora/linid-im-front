@@ -93,20 +93,6 @@ Receive and validate the module’s configuration loaded from its JSON file.
 - Check required configuration fields
 - Store configuration for later phases
 
----
-
-## **3. Initialize Phase**
-
-### **Purpose**
-
-Register all runtime contributions of the module.
-
-### **Typical Actions**
-
-- Register state stores
-- Register components or UI extensions
-- Initialize services, listeners, or background processes
-
 ### **Route Loading**
 
 After all modules complete the **Initialize** phase, the host automatically loads and registers routes from each module:
@@ -128,6 +114,19 @@ After all modules complete the **Initialize** phase, the host automatically load
 ```
 
 For more details on route management, see the [Route Management Guide](./routes.md).
+
+---
+
+## **3. Initialize Phase**
+
+### **Purpose**
+
+Register all runtime contributions of the module.
+
+### **Typical Actions**
+
+- Register components or UI extensions
+- Initialize services, listeners, or background processes
 
 ---
 
@@ -179,61 +178,40 @@ interface ModuleLifecycleResult {
 
 # 🐞 **Error Handling**
 
-### **Module fails to load**
+## ** Module configuration files list fails to load**
 
-The module is skipped, but the system continues:
-
-```
-[Module Lifecycle] Failed to load module <remote>/lifecycle: <error>
-```
-
----
-
-### **Failure in a lifecycle phase**
-
-Errors are logged without interrupting the lifecycle of other modules:
+If `modules.json` cannot be loaded, the host application will log an error and skip the module lifecycle system:
 
 ```
-[Module Lifecycle] my-module: Error in initialize phase: <error>
+[Module Lifecycle] Failed to load module configurations: Failed to fetch /modules.json
 ```
 
 ---
 
-### **Invalid lifecycle results**
+## **Module configuration fails to load**
 
-Non-conforming results are treated as successful:
+If a module’s configuration file cannot be loaded, the host will log an error and skip that module:
 
 ```
-[Module Lifecycle] my-module: Phase setup returned invalid result, treating as success
+[Module Lifecycle] [Module Lifecycle] Config file not found: moduleMyModule.json
 ```
+
+---
+
+## **Module's lifecycle fails to load**
+
+If a module’s remote lifecycle cannot be loaded, the host application will crash.
 
 ---
 
 # 🔍 **Debugging**
 
-The lifecycle system logs detailed information such as:
+The lifecycle system logs detailed information about configuration loading:
 
-- Configuration loading
-- Remote lifecycle loading
-- Phase execution start/end
-- Skipped or unimplemented hooks
-- Final lifecycle completion
-
-Example debug messages:
+Example debug message:
 
 ```
-[Module Lifecycle] Starting lifecycle initialization
-[Module Lifecycle] Registered module: my-module
-[Module Lifecycle] Starting setup phase
-[Module Lifecycle] Completed setup phase
-...
-[Module Lifecycle] Lifecycle initialization complete
-```
-
-Unimplemented hooks are logged at debug level:
-
-```
-[Module Lifecycle] my-module: ready hook not implemented, skipping
+[Module Lifecycle] Loaded config for module: public/moduleMyModule.json
 ```
 
 ---
