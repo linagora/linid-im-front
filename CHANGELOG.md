@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.11](https://github.com/linagora/linid-im-front/compare/v0.0.10...v0.0.11) (2026-01-06)
+
+
+### Features
+
+* add design documentation ([e274f20](https://github.com/linagora/linid-im-front/commit/e274f20927a38657d0d916968c16e11016b24a58))
+* setup i18n ([15b0214](https://github.com/linagora/linid-im-front/commit/15b02140b02ce231343ceb085207dc1ebb96616d))
+
 ### [0.0.10](https://github.com/linagora/linid-im-front/compare/v0.0.9...v0.0.10) (2026-01-05)
 
 ### Features
