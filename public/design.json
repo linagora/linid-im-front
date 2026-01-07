@@ -7,12 +7,44 @@
       "noCaps": true
     },
     "q-tabs": {
-      "dense": true,
+      "dense": false,
       "align": "center",
+      "noCaps": true,
+      "inlineLabel": true
+    },
+    "q-route-tab": {
       "noCaps": true
     },
     "q-table": {
       "dense": true
+    },
+    "q-header": {
+      "elevated": true
+    },
+    "q-toolbar": {
+      "inset": false
+    },
+    "q-toolbar-title": {
+      "shrink": false
+    },
+    "q-badge": {
+      "color": "primary",
+      "align": "middle",
+      "floating": false
+    }
+  },
+  "base-layout": {
+    "header": {
+      "toolbar": {
+        "navigationItems": {
+          "route-moduleUsers": {
+            "q-route-tab": {
+              "icon": "person",
+              "noCaps": true
+            }
+          }
+        }
+      }
     }
   }
 }
