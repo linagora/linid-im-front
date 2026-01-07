@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.12](https://github.com/linagora/linid-im-front/compare/v0.0.11...v0.0.12) (2026-01-07)
+
+
+### Features
+
+* add configuration for phase initialize, ready and postInit ([f0c341b](https://github.com/linagora/linid-im-front/commit/f0c341b67aa0491ecfe6cd4b9cf343b464df8f72))
+* manage meta in module routing ([ed8db0c](https://github.com/linagora/linid-im-front/commit/ed8db0cecce705eb0bd12407bd34e18829d58004))
+* shared vue-router for modules ([bcb3e89](https://github.com/linagora/linid-im-front/commit/bcb3e8911b9c7af8d6d84bd172757ef1a4b7d4d1))
+
+
+### Bug Fixes
+
+* add missing configuration for module-users ([645887d](https://github.com/linagora/linid-im-front/commit/645887d7f69f003a3140c2e776c1b8beccf62719))
+* docker for dev ([cf9f6ee](https://github.com/linagora/linid-im-front/commit/cf9f6ee550507bf0fb21e7ea8a5460058ef43c78))
+* generate i18n key for modules ([83d1c4d](https://github.com/linagora/linid-im-front/commit/83d1c4d0cc6d66cc4c20745b6f3483ad6871dedd))
+
 ### [0.0.11](https://github.com/linagora/linid-im-front/compare/v0.0.10...v0.0.11) (2026-01-06)
 
 
