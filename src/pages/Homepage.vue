@@ -30,7 +30,7 @@
       class="text-h1"
       data-cy="title"
     >
-      {{ $t('homepage.title.label') }}
+      {{ $t('Homepage.title') }}
     </div>
   </q-page>
 </template>

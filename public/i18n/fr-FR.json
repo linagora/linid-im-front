@@ -2,5 +2,8 @@
   "application": {
     "title": "Linid - Identity Manager",
     "version": "Dev version"
+  },
+  "Homepage": {
+    "title": "LinID Identity Manager"
   }
 }
