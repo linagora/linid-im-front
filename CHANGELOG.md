@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.13](https://github.com/linagora/linid-im-front/compare/v0.0.12...v0.0.13) (2026-01-08)
+
+
+### Features
+
+* configure application header design ([148cfab](https://github.com/linagora/linid-im-front/commit/148cfab9934d512c80263d5283a0528da444713a))
+* setup Pinia store instance ([e005505](https://github.com/linagora/linid-im-front/commit/e00550560f1cc81a0345015e13f5ef934834f102))
+
 ### [0.0.12](https://github.com/linagora/linid-im-front/compare/v0.0.11...v0.0.12) (2026-01-07)
 
 
