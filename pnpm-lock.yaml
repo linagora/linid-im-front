@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@linagora/linid-im-front-corelib':
-        specifier: 0.0.18
-        version: 0.0.18(@module-federation/enhanced@0.21.6(typescript@5.9.3)(vue-tsc@3.1.8(typescript@5.9.3)))(axios@1.13.2)(pinia@3.0.4(typescript@5.9.3)(vue@3.5.25(typescript@5.9.3)))(quasar@2.18.6)(vue-i18n@11.2.2(vue@3.5.25(typescript@5.9.3)))(vue@3.5.25(typescript@5.9.3))
+        specifier: 0.0.20
+        version: 0.0.20(@module-federation/enhanced@0.21.6(typescript@5.9.3)(vue-tsc@3.1.8(typescript@5.9.3)))(axios@1.13.2)(pinia@3.0.4(typescript@5.9.3)(vue@3.5.25(typescript@5.9.3)))(quasar@2.18.6)(vue-i18n@11.2.2(vue@3.5.25(typescript@5.9.3)))(vue@3.5.25(typescript@5.9.3))
       '@module-federation/enhanced':
         specifier: 0.21.6
         version: 0.21.6(typescript@5.9.3)(vue-tsc@3.1.8(typescript@5.9.3))
@@ -477,8 +477,8 @@ packages:
   '@jridgewell/trace-mapping@0.3.31':
     resolution: {integrity: sha512-zzNR+SdQSDJzc8joaeP8QQoCQr8NuYx2dIIytl1QeBEZHJ9uW6hebsrYgbz8hJwUQao3TWCMtmfV8Nu1twOLAw==}
 
-  '@linagora/linid-im-front-corelib@0.0.18':
-    resolution: {integrity: sha512-Gk8TjyjfZ7E8d2FdWRp0CHRItB1kCDNs9MWvXgHgTBxE5EkXlqmSZ1kAxozBUVgA9zcrOD1IVIeMFRrc2K800g==}
+  '@linagora/linid-im-front-corelib@0.0.20':
+    resolution: {integrity: sha512-MCwvb6QMIHYmhUbZj87S1nA7eMAuIihUdU4FqsfFFJ/8wuZT8e6EN0RdXssPrJx3qm1vqJ+94STn6IjkKBNdTg==}
     peerDependencies:
       '@module-federation/enhanced': 0.21.6
       axios: 1.13.2
@@ -4258,7 +4258,7 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.5
 
-  '@linagora/linid-im-front-corelib@0.0.18(@module-federation/enhanced@0.21.6(typescript@5.9.3)(vue-tsc@3.1.8(typescript@5.9.3)))(axios@1.13.2)(pinia@3.0.4(typescript@5.9.3)(vue@3.5.25(typescript@5.9.3)))(quasar@2.18.6)(vue-i18n@11.2.2(vue@3.5.25(typescript@5.9.3)))(vue@3.5.25(typescript@5.9.3))':
+  '@linagora/linid-im-front-corelib@0.0.20(@module-federation/enhanced@0.21.6(typescript@5.9.3)(vue-tsc@3.1.8(typescript@5.9.3)))(axios@1.13.2)(pinia@3.0.4(typescript@5.9.3)(vue@3.5.25(typescript@5.9.3)))(quasar@2.18.6)(vue-i18n@11.2.2(vue@3.5.25(typescript@5.9.3)))(vue@3.5.25(typescript@5.9.3))':
     dependencies:
       '@module-federation/enhanced': 0.21.6(typescript@5.9.3)(vue-tsc@3.1.8(typescript@5.9.3))
       axios: 1.13.2
