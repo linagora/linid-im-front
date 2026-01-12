@@ -59,7 +59,9 @@ import type { BootFileParams } from '#q-app';
  *   list is returned.
  * @returns A promise resolving to the list of successfully loaded module host configurations.
  */
-export async function getModulesConfiguration(): Promise<ModuleHostConfig[]> {
+export async function getModulesConfiguration(): Promise<
+  ModuleHostConfig<unknown>[]
+> {
   try {
     const response = await fetch('/modules.json');
 
@@ -100,7 +102,7 @@ export async function getModulesConfiguration(): Promise<ModuleHostConfig[]> {
 
     // Filter out failed fetches
     return moduleConfigs.filter(
-      (config): config is ModuleHostConfig => config !== null
+      (config): config is ModuleHostConfig<unknown> => config !== null
     );
   } catch (error) {
     console.error(
@@ -124,7 +126,7 @@ export async function getModulesConfiguration(): Promise<ModuleHostConfig[]> {
  * @returns A promise resolving to the list of routes exposed by the module, or `null` if the module defines no routes.
  */
 async function getRoutes(
-  config: ModuleHostConfig
+  config: ModuleHostConfig<unknown>
 ): Promise<LinidRoute[] | null> {
   const routes = await loadRemote<FederatedModule<LinidRoute[]>>(
     `${config.remoteName}/routes`
@@ -142,7 +144,9 @@ async function getRoutes(
  * @param config - Configuration object for the remote module.
  * @returns A promise that resolves to the i18n messages object. Returns an empty object if no messages are found.
  */
-async function getI18nMessages(config: ModuleHostConfig): Promise<object> {
+async function getI18nMessages(
+  config: ModuleHostConfig<unknown>
+): Promise<object> {
   const messages = await loadRemote<FederatedModule<object>>(
     `${config.remoteName}/i18n`
   );
@@ -165,7 +169,7 @@ async function getI18nMessages(config: ModuleHostConfig): Promise<object> {
  */
 export function toRouteRecordRaw(
   route: LinidRoute,
-  config: ModuleHostConfig
+  config: ModuleHostConfig<unknown>
 ): RouteRecordRaw {
   return {
     path: nunjucksEnv.renderString(route.path, { config }),
@@ -188,7 +192,10 @@ export function toRouteRecordRaw(
  * @param config - The ModuleHostConfig object used as the template context.
  * @returns A new object/array/string with all strings rendered using Nunjucks.
  */
-export function renderMeta(obj: unknown, config: ModuleHostConfig): unknown {
+export function renderMeta(
+  obj: unknown,
+  config: ModuleHostConfig<unknown>
+): unknown {
   if (typeof obj === 'string') {
     return nunjucksEnv.renderString(obj, { config });
   }
@@ -228,8 +235,8 @@ export function renderMeta(obj: unknown, config: ModuleHostConfig): unknown {
  * @returns A promise resolving to the module's setup result.
  */
 export async function setup(
-  module: RemoteModule,
-  config: ModuleHostConfig,
+  module: RemoteModule<unknown>,
+  config: ModuleHostConfig<unknown>,
   _boot: BootFileParams
 ) {
   registerModuleHostConfiguration(config);
@@ -255,8 +262,8 @@ export async function setup(
  * @returns A promise resolving to the module's configuration result.
  */
 export async function configure(
-  module: RemoteModule,
-  config: ModuleHostConfig,
+  module: RemoteModule<unknown>,
+  config: ModuleHostConfig<unknown>,
   boot: BootFileParams
 ) {
   const routes = await getRoutes(config);
@@ -311,8 +318,8 @@ export async function configure(
  * @returns A promise resolving to the module's initialization result.
  */
 export async function initialize(
-  module: RemoteModule,
-  config: ModuleHostConfig,
+  module: RemoteModule<unknown>,
+  config: ModuleHostConfig<unknown>,
   _boot: BootFileParams
 ) {
   return module.initialize(config);
@@ -337,8 +344,8 @@ export async function initialize(
  * @returns A promise resolving to the module's ready result.
  */
 export async function ready(
-  module: RemoteModule,
-  config: ModuleHostConfig,
+  module: RemoteModule<unknown>,
+  config: ModuleHostConfig<unknown>,
   _boot: BootFileParams
 ) {
   return module.ready(config);
@@ -359,8 +366,8 @@ export async function ready(
  * @returns A promise resolving to the module's post-initialization result.
  */
 export async function postInit(
-  module: RemoteModule,
-  config: ModuleHostConfig,
+  module: RemoteModule<unknown>,
+  config: ModuleHostConfig<unknown>,
   _boot: BootFileParams
 ) {
   return module.postInit(config);

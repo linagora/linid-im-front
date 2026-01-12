@@ -104,15 +104,6 @@ After all modules complete the **Initialize** phase, the host automatically load
 
 **Modules do not need to register routes manually** during the Initialize phase.
 
-```
-[Module Lifecycle] Starting initialize phase
-[Module Lifecycle] Completed initialize phase
-[Module Lifecycle] Loading module routes
-[Route Manager] Loading routes from myModule/routes
-[Route Manager] Registered route: /app/dashboard
-[Route Manager] Successfully registered 2 route(s) from myModule
-```
-
 For more details on route management, see the [Route Management Guide](./routes.md).
 
 ---
