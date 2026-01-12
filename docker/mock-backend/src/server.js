@@ -2,7 +2,7 @@ import cors from 'cors';
 import express from 'express';
 import i18n from './data/i18n.js';
 import metadataRoutes from './routes/metadata.js';
-import users from './data/users.js';
+import usersRoutes from './routes/users.js';
 
 const app = express();
 const PORT = process.env.PORT || 8080;
@@ -28,9 +28,8 @@ app.get('/i18n/:lang.json', (req, res) => {
   res.status(200).json(i18n[req.params.lang]);
 });
 
-app.get('/api/users', (_req, res) => {
-  res.status(200).json(users);
-});
+// users routes
+app.use('/api/users', usersRoutes);
 
 // Error handler
 app.use((err, _req, res, _next) => {
@@ -55,4 +54,7 @@ app.listen(PORT, () => {
   console.log(`  - GET /i18n/languages`);
   console.log(`  - GET /i18n/:lang.json`);
   console.log(`  - GET /api/users`);
+  console.log(`  - GET /api/users/:id`);
+  console.log(`  - POST /api/users`);
+  console.log(`  - PUT /api/users/:id`);
 });
