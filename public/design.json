@@ -8,7 +8,7 @@
     },
     "q-tabs": {
       "dense": false,
-      "align": "center",
+      "align": "left",
       "noCaps": true,
       "inlineLabel": true
     },
@@ -35,13 +35,11 @@
   },
   "base-layout": {
     "header": {
-      "toolbar": {
-        "navigationItems": {
-          "route-moduleUsers": {
-            "q-route-tab": {
-              "icon": "person",
-              "noCaps": true
-            }
+      "navigation-menu": {
+        "route-moduleUsers": {
+          "q-route-tab": {
+            "icon": "person",
+            "noCaps": true
           }
         }
       }
