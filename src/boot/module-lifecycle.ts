@@ -25,15 +25,15 @@
  * LinID Identity Manager software.
  */
 
+import { BootFileParams } from '#q-app';
 import {
   ModuleLifecyclePhase,
   type FederatedModule,
   type RemoteModule,
 } from '@linagora/linid-im-front-corelib';
+import { loadRemote } from '@module-federation/enhanced/runtime';
 import { defineBoot } from '@quasar/app-vite/wrappers';
 import * as ModuleLifecycleService from 'src/services/ModuleLifecycleService';
-import { loadRemote } from '@module-federation/enhanced/runtime';
-import { BootFileParams } from '#q-app';
 
 /**
  * Application bootstrapping entry point.
@@ -58,7 +58,7 @@ export default defineBoot(async (boot: BootFileParams): Promise<void> => {
   const modules = new Map();
 
   for (const configuration of configurations) {
-    const module = await loadRemote<FederatedModule<RemoteModule>>(
+    const module = await loadRemote<FederatedModule<RemoteModule<unknown>>>(
       `${configuration.remoteName}/lifecycle`
     );
 

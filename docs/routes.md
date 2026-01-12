@@ -29,7 +29,7 @@ import type { LinidRoute } from '@linagora/linid-im-front-corelib';
 
 const routes: LinidRoute[] = [
   {
-    path: '{{ basePath }}/dashboard',
+    path: '{{ config.basePath }}/dashboard',
     component: 'myModule/Dashboard',
     children: [],
   },
@@ -44,7 +44,7 @@ The host provides a `ModuleHostConfig` for each module:
 
 ```json
 {
-  "id": "my-module",
+  "instanceId": "my-module",
   "remoteName": "my-module-remote",
   "basePath": "/app"
 }
@@ -89,11 +89,14 @@ Any property in `ModuleHostConfig` can be used:
 
 ```json
 {
-  "id": "messaging",
+  "instanceId": "messaging",
   "remoteName": "messaging-remote",
   "basePath": "/chat",
-  "apiVersion": "v2",
-  "theme": "dark"
+  "apiEndpoint": "api/messages",
+  "options": {
+    "apiVersion": "v2",
+    "theme": "dark"
+  }
 }
 ```
 
@@ -102,12 +105,12 @@ Any property in `ModuleHostConfig` can be used:
 ```typescript
 const routes: LinidRoute[] = [
   {
-    path: '{{ basePath }}/inbox', // → /chat/inbox
+    path: '{{ config.basePath }}/inbox', // → /chat/inbox
     component: 'messaging/Inbox',
     children: [],
   },
   {
-    path: '{{ basePath }}/api/{{ apiVersion }}', // → /chat/api/v2
+    path: '{{ config.basePath }}/api/{{ config.options.apiVersion }}', // → /chat/api/v2
     component: 'messaging/ApiDocs',
     children: [],
   },
@@ -120,7 +123,7 @@ Nunjucks supports filters, conditionals, and loops:
 
 ```typescript
 {
-  path: '{{ basePath | lower }}/settings',  // Apply lowercase filter
+  path: '{{ config.basePath | lower }}/settings',  // Apply lowercase filter
   component: 'messaging/Settings',
   children: []
 }
@@ -135,7 +138,7 @@ Routes can have nested children:
 ```typescript
 const routes: LinidRoute[] = [
   {
-    path: '{{ basePath }}/users',
+    path: '{{ config.basePath }}/users',
     component: 'myModule/UserLayout',
     children: [
       {
@@ -210,7 +213,7 @@ import type { LinidRoute } from '@linagora/linid-im-front-corelib';
 
 const routes: LinidRoute[] = [
   {
-    path: '{{ basePath }}/dashboard',
+    path: '{{ config.basePath }}/dashboard',
     component: 'myModule/Dashboard',
     children: [
       {
@@ -220,7 +223,7 @@ const routes: LinidRoute[] = [
     ],
   },
   {
-    path: '{{ basePath }}/settings',
+    path: '{{ config.basePath }}/settings',
     component: 'myModule/Settings',
     children: [],
   },
@@ -233,9 +236,10 @@ export default routes;
 
 ```json
 {
-  "id": "my-module",
+  "instanceId": "my-module",
   "remoteName": "my-module-remote",
-  "basePath": "/my-app"
+  "basePath": "/my-app",
+  "apiEndpoint": "/api"
 }
 ```
 
@@ -246,23 +250,3 @@ Routes registered:
 - `/my-app/dashboard` → `myModule/Dashboard`
   - `/my-app/dashboard/analytics` → `myModule/Analytics`
 - `/my-app/settings` → `myModule/Settings`
-
----
-
-## **🐞 Debugging**
-
-The route manager logs detailed information:
-
-```
-[Route Manager] Loading routes from myModule/routes
-[Route Manager] Registered route: /my-app/dashboard
-[Route Manager] Registered route: /my-app/settings
-[Route Manager] Successfully registered 2 route(s) from myModule
-```
-
-If routes fail to load:
-
-```
-[Route Manager] Module myModule/routes does not export a default export
-[Route Manager] Failed to load routes from myModule/routes: <error>
-```
