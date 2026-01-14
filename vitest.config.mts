@@ -1,7 +1,7 @@
-import { defineConfig } from 'vitest/config';
-import vue from '@vitejs/plugin-vue';
 import { quasar, transformAssetUrls } from '@quasar/vite-plugin';
+import vue from '@vitejs/plugin-vue';
 import tsconfigPaths from 'vite-tsconfig-paths';
+import { defineConfig } from 'vitest/config';
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -21,7 +21,6 @@ export default defineConfig({
         '**/*.spec.ts',
         '**/tests/**',
         '**/test/**',
-        'src/App.vue',
         'src/env.d.ts',
         'src/types/**',
         'src/i18n/**',

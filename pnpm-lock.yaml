@@ -29,6 +29,9 @@ importers:
       quasar:
         specifier: 2.18.6
         version: 2.18.6
+      rxjs:
+        specifier: 7.8.2
+        version: 7.8.2
       vue:
         specifier: 3.5.25
         version: 3.5.25(typescript@5.9.3)
