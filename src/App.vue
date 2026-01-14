@@ -27,3 +27,24 @@
 <template>
   <router-view />
 </template>
+
+<script setup lang="ts">
+import { uiEventSubject, type UiEvent } from '@linagora/linid-im-front-corelib';
+import { Notify, type QNotifyCreateOptions } from 'quasar';
+import { type Subscription } from 'rxjs';
+import { onMounted, onUnmounted } from 'vue';
+
+let subscription!: Subscription;
+
+onMounted(() => {
+  subscription = uiEventSubject.subscribe((event: UiEvent) => {
+    if (event.key === 'notify') {
+      Notify.create(event.data as QNotifyCreateOptions);
+    }
+  });
+});
+
+onUnmounted(() => {
+  subscription.unsubscribe();
+});
+</script>
