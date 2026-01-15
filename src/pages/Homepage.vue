@@ -25,12 +25,47 @@
 -->
 
 <template>
-  <q-page data-cy="home-page">
-    <div
-      class="text-h1"
-      data-cy="title"
-    >
-      {{ $t('Homepage.title') }}
-    </div>
+  <q-page
+    data-cy="home-page"
+    class="q-pa-md flex justify-center bg-grey-1"
+  >
+    <q-card class="q-pa-md q-mb-lg shadow-2 self-start home-page--info">
+      <!-- eslint-disable vue/no-v-text-v-html-on-component vue/no-v-html -->
+      <q-card-section
+        class="q-pa-sm"
+        v-html="t('intro')"
+      />
+      <q-card-section
+        class="q-pa-sm"
+        v-html="t('opensource')"
+      />
+      <q-card-section
+        class="q-pa-sm"
+        v-html="t('license')"
+      />
+      <q-card-section
+        class="q-pa-sm"
+        v-html="t('links')"
+      />
+      <q-separator />
+      <q-card-section
+        class="q-pa-sm"
+        v-html="t('branding')"
+      />
+      <!-- eslint-enable vue/no-v-text-v-html-on-component vue/no-v-html -->
+    </q-card>
   </q-page>
 </template>
+
+<script setup lang="ts">
+import { useScopedI18n } from '@linagora/linid-im-front-corelib';
+
+const { t } = useScopedI18n('Homepage');
+</script>
+
+<style scoped>
+.home-page--info {
+  width: 100%;
+  max-width: 700px;
+}
+</style>
