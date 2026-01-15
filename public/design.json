@@ -42,6 +42,9 @@
             "noCaps": true
           }
         }
+      },
+      "q-img": {
+        "src": "/toolbarApplicationLogo.svg"
       }
     }
   }
