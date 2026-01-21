@@ -8,28 +8,28 @@
       {
         "name": "table_actions",
         "field": "id",
-        "label": "column-action",
+        "label": "columnAction",
         "style": "width: 150px",
         "headerStyle": "width: 150px"
       },
       {
         "name": "email",
         "field": "email",
-        "label": "column-email",
+        "label": "columnEmail",
         "align": "left",
         "sortable": true
       },
       {
         "name": "firstName",
         "field": "firstName",
-        "label": "column-firstName",
+        "label": "columnFirstName",
         "align": "left",
         "sortable": true
       },
       {
         "name": "lastName",
         "field": "lastName",
-        "label": "column-lastName",
+        "label": "columnLastName",
         "align": "left",
         "sortable": true
       }
