@@ -144,11 +144,11 @@ export default defineConfig((ctx) => {
       open: true, // opens browser window automatically
       https: true,
       proxy: {
-        '/api': {
+        '/backend': {
           target: 'http://localhost:8080',
           changeOrigin: true,
           secure: false,
-          rewrite: (path) => path.replace(/^\/api/, ''),
+          rewrite: (path: string) => path.replace(/^\/backend/, ''),
         },
       },
     },
