@@ -3,8 +3,49 @@ import users from '../data/users.js';
 
 const router = Router();
 
-router.get('', (_req, res) => {
-  res.status(200).json(users);
+router.get('', (req, res) => {
+  const { page = 0, size = 10, ...filters } = req.query;
+
+  // Filter users based on query params (case-insensitive partial match)
+  let filteredContent = users.content.filter((user) => {
+    return Object.entries(filters)
+      .filter(([_, value]) => value && value !== '')
+      .every(
+        ([key, value]) =>
+          user[key] != null &&
+          String(user[key]).toLowerCase().includes(String(value).toLowerCase())
+      );
+  });
+
+  // Pagination
+  const pageNumber = parseInt(page, 10);
+  const pageSize = parseInt(size, 10);
+  const totalElements = filteredContent.length;
+  const totalPages = Math.ceil(totalElements / pageSize);
+  const start = pageNumber * pageSize;
+  const end = start + pageSize;
+  const paginatedContent = filteredContent.slice(start, end);
+
+  res.status(200).json({
+    content: paginatedContent,
+    pageable: {
+      sort: { sorted: false, unsorted: true, empty: true },
+      pageNumber,
+      pageSize,
+      offset: start,
+      paged: true,
+      unpaged: false,
+    },
+    totalElements,
+    totalPages,
+    last: pageNumber >= totalPages - 1,
+    first: pageNumber === 0,
+    numberOfElements: paginatedContent.length,
+    sort: { sorted: false, unsorted: true, empty: true },
+    size: pageSize,
+    number: pageNumber,
+    empty: paginatedContent.length === 0,
+  });
 });
 
 router.get('/:id', (req, res) => {

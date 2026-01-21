@@ -28,7 +28,7 @@ app.get('/i18n/:lang.json', (req, res) => {
   res.status(200).json(i18n[req.params.lang]);
 });
 
-// users routes
+// users routes (compliant with linid-im-api)
 app.use('/api/users', usersRoutes);
 
 // Error handler
