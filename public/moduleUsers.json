@@ -63,6 +63,8 @@
       ],
       "defaultFieldsNames": ["email", "firstName"],
       "advancedFieldsNames": ["lastName"]
-    }
+    },
+    "fieldOrder": ["id", "email", "firstName", "lastName", "role"],
+    "showRemainingFields": false
   }
 }

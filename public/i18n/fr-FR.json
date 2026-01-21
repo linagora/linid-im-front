@@ -26,6 +26,17 @@
         "lessFilters": "Moins de filtres"
       }
     },
+    "UserDetailsPage": {
+      "EntityDetailsCard": {
+        "attributes": {
+          "id": "ID",
+          "email": "Email",
+          "firstName": "Prénom",
+          "lastName": "Nom de famille",
+          "role": "Rôle"
+        }
+      }
+    },
     "fields": {
       "email": {
         "label": "Email"
