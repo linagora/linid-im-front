@@ -32,10 +32,9 @@ The main configuration is in `public/design.json`:
       "color": "primary",
       "noCaps": true
     },
-    "q-tabs": {
+    "q-input": {
       "dense": true,
-      "align": "center",
-      "noCaps": true
+      "outlined": true
     },
     "q-table": {
       "dense": true
@@ -45,12 +44,33 @@ The main configuration is in `public/design.json`:
 ```
 
 - `default`: default configuration applied globally
-- Keys like `q-btn`, `q-tabs`, `q-table` correspond to **Quasar components**
+- Keys like `q-btn`, `q-input`, `q-table` correspond to **Quasar components**
 - Properties inside each key define **default behavior or styling**
 
 ---
 
-### **2. Adding New Global Defaults**
+### **2. Supported Components**
+
+The following Quasar components are supported by the design system (via `useUiDesign()` composable from corelib):
+
+| Component                                  | Description    |
+| ------------------------------------------ | -------------- |
+| `q-btn`                                    | Buttons        |
+| `q-tabs`, `q-route-tab`                    | Tab navigation |
+| `q-table`                                  | Data tables    |
+| `q-header`, `q-toolbar`, `q-toolbar-title` | Layout header  |
+| `q-badge`                                  | Badges         |
+| `q-input`                                  | Text inputs    |
+| `q-card`, `q-card-actions`                 | Card container |
+| `q-avatar`                                 | User avatars   |
+| `q-icon`                                   | Icons          |
+| `q-toggle`                                 | Toggle switch  |
+| `q-img`                                    | Images         |
+| `q-date`                                   | Date picker    |
+
+---
+
+### **3. Adding New Global Defaults**
 
 1. Add or modify properties in `public/design.json`:
 
@@ -62,10 +82,6 @@ The main configuration is in `public/design.json`:
       "outline": false,
       "color": "secondary",
       "noCaps": true
-    },
-    "q-input": {
-      "dense": true,
-      "filled": true
     }
   }
 }
@@ -81,8 +97,10 @@ The main configuration is in `public/design.json`:
 - **Properties override default Quasar behavior** but can be overridden per instance if needed:
 
 ```vue
-<q-btn label="Cancel" dense="false" color="red" />
+<q-btn label="Cancel" :dense="false" color="red" />
 <!-- instance-level overrides -->
 ```
 
 - **Asynchronous loading** ensures the configuration can be updated dynamically without rebuilding the app
+- **Type safety**: Refer to Quasar documentation for valid property values
+- **Supported components**: Only components listed in `QComponentName` type from corelib are supported by `useUiDesign()`
