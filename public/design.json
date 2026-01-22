@@ -50,15 +50,17 @@
     "q-toggle": {
       "dense": true,
       "color": "primary"
-    }
+    },
+    "q-card": {},
+    "q-date": {},
+    "q-img": {}
   },
   "base-layout": {
     "header": {
       "navigation-menu": {
         "route-moduleUsers": {
           "q-route-tab": {
-            "icon": "person",
-            "noCaps": true
+            "icon": "person"
           }
         }
       },

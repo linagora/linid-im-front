@@ -24,13 +24,25 @@
  * LinID Identity Manager software.
  */
 
-// This is just an example,
-// so you can safely delete all default props below
-
+/**
+ * Type definition for i18n messages.
+ * This must match the structure in public/i18n/en-US.json for proper type checking.
+ *
+ * Note: Only core application translations are defined here.
+ * Module-specific translations (e.g., moduleUsers) are loaded dynamically
+ * from the public/i18n/*.json files.
+ */
 export default {
-  homepage: {
-    title: {
-      label: 'LinID Identity Manager',
-    },
+  application: {
+    title: 'LinID - Identity Manager',
+    version: 'Development version',
+  },
+  Homepage: {
+    title: 'LinID Identity Manager',
+    intro: '',
+    opensource: '',
+    license: '',
+    links: '',
+    branding: '',
   },
 };
