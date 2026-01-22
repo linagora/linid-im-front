@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.18](https://github.com/linagora/linid-im-front/compare/v0.0.17...v0.0.18) (2026-01-22)
+
+
+### Features
+
+* add homepage informations ([ab426e5](https://github.com/linagora/linid-im-front/commit/ab426e53b2cdcc03cbc2f9ee7a85206b9a2140be))
+
 ### [0.0.17](https://github.com/linagora/linid-im-front/compare/v0.0.16...v0.0.17) (2026-01-20)
 
 ### [0.0.16](https://github.com/linagora/linid-im-front/compare/v0.0.15...v0.0.16) (2026-01-20)
