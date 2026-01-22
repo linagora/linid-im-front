@@ -10,7 +10,8 @@
       "dense": false,
       "align": "left",
       "noCaps": true,
-      "inlineLabel": true
+      "inlineLabel": true,
+      "activeBgColor": "primary"
     },
     "q-route-tab": {
       "noCaps": true
@@ -31,6 +32,24 @@
       "color": "primary",
       "align": "middle",
       "floating": false
+    },
+    "q-input": {
+      "dense": true,
+      "outlined": true
+    },
+    "q-card-actions": {
+      "align": "right"
+    },
+    "q-avatar": {
+      "size": "md",
+      "color": "primary"
+    },
+    "q-icon": {
+      "size": "sm"
+    },
+    "q-toggle": {
+      "dense": true,
+      "color": "primary"
     }
   },
   "base-layout": {
