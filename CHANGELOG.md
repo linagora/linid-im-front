@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.20](https://github.com/linagora/linid-im-front/compare/v0.0.18...v0.0.20) (2026-01-28)
+
+
+### Features
+
+* add i18n translations for module-users ([9501dc9](https://github.com/linagora/linid-im-front/commit/9501dc97c06d45e435d55fdc73c4a99040c90999)), closes [linagora/linid-im-front-community-plugins#63](https://github.com/linagora/linid-im-front-community-plugins/issues/63)
+* add userDetails and icons config ([9f2fbf6](https://github.com/linagora/linid-im-front/commit/9f2fbf60ec2918a3fefb7707e52fcd6e98fa4309))
+* **mock-backend:** add filtering and pagination support ([4d00eb7](https://github.com/linagora/linid-im-front/commit/4d00eb7b20792b78d1a9941b83d34a0346aa566e)), closes [linagora/linid-im-front-community-plugins#63](https://github.com/linagora/linid-im-front-community-plugins/issues/63)
+
+
+### Bug Fixes
+
+* correct apiEndpoint for proxy compatibility ([926eed2](https://github.com/linagora/linid-im-front/commit/926eed2f2228f83fabd9bc9fd61828334c47215c)), closes [linagora/linid-im-front-community-plugins#63](https://github.com/linagora/linid-im-front-community-plugins/issues/63)
+
 ### [0.0.19](https://github.com/linagora/linid-im-front/compare/v0.0.18...v0.0.19) (2026-01-22)
 
 
