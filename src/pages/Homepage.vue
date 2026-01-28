@@ -33,23 +33,28 @@
       <!-- eslint-disable vue/no-v-text-v-html-on-component vue/no-v-html -->
       <q-card-section
         class="q-pa-sm"
+        data-cy="home-page-intro"
         v-html="t('intro')"
       />
       <q-card-section
         class="q-pa-sm"
+        data-cy="home-page-opensource"
         v-html="t('opensource')"
       />
       <q-card-section
         class="q-pa-sm"
+        data-cy="home-page-license"
         v-html="t('license')"
       />
       <q-card-section
         class="q-pa-sm"
+        data-cy="home-page-links"
         v-html="t('links')"
       />
       <q-separator />
       <q-card-section
         class="q-pa-sm"
+        data-cy="home-page-branding"
         v-html="t('branding')"
       />
       <!-- eslint-enable vue/no-v-text-v-html-on-component vue/no-v-html -->
