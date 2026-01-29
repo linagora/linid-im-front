@@ -38,7 +38,7 @@
     "postinstall": "quasar prepare"
   },
   "dependencies": {
-    "@linagora/linid-im-front-corelib": "0.0.31",
+    "@linagora/linid-im-front-corelib": "0.0.34",
     "@module-federation/enhanced": "0.21.6",
     "@quasar/extras": "1.17.0",
     "axios": "1.13.2",
