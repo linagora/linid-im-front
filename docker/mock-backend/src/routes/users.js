@@ -4,7 +4,8 @@ import users from '../data/users.js';
 const router = Router();
 
 router.get('', (req, res) => {
-  const { page = 0, size = 10, ...filters } = req.query;
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { page = 0, size = 10, sort, direction, ...filters } = req.query;
 
   // Filter users based on query params (case-insensitive partial match)
   let filteredContent = users.content.filter((user) => {
@@ -59,7 +60,7 @@ router.get('/:id', (req, res) => {
 });
 
 router.post('', (req, res) => {
-  const newUser = req.body;
+  const newUser = { ...req.body, id: String(Date.now()) };
   users.content.push(newUser);
   res.status(201).json(newUser);
 });
