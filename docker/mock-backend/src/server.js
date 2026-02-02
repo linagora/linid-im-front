@@ -1,5 +1,6 @@
 import cors from 'cors';
 import express from 'express';
+import { createErrorResponse } from 'utils.js';
 import i18n from './data/i18n.js';
 import metadataRoutes from './routes/metadata.js';
 import usersRoutes from './routes/users.js';
@@ -36,12 +37,14 @@ app.use((err, _req, res, _next) => {
   console.error('[Mock Backend] Error:', err.message);
   res
     .status(500)
-    .json({ error: 'Internal server error', message: err.message });
+    .json(createErrorResponse(500, err.message, 'error.internal_server_error'));
 });
 
 // 404 handler
 app.use((_req, res) => {
-  res.status(404).json({ error: 'Not found' });
+  res
+    .status(404)
+    .json(createErrorResponse(404, 'Not found', 'error.not_found'));
 });
 
 app.listen(PORT, () => {
