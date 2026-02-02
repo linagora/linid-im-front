@@ -1,5 +1,6 @@
 {
   "instanceId": "moduleUsers",
+  "entity": "user",
   "remoteName": "moduleUsers",
   "apiEndpoint": "api/users",
   "options": {
@@ -10,7 +11,8 @@
         "field": "id",
         "label": "columnAction",
         "style": "width: 150px",
-        "headerStyle": "width: 150px"
+        "headerStyle": "width: 150px",
+        "align": "center"
       },
       {
         "name": "email",
@@ -64,7 +66,27 @@
       "defaultFieldsNames": ["email", "firstName"],
       "advancedFieldsNames": ["lastName"]
     },
-    "fieldOrder": ["id", "email", "firstName", "lastName", "role"],
-    "showRemainingFields": false
+    "fieldOrder": [
+      "id",
+      "email",
+      "firstName",
+      "lastName",
+      "displayName",
+      "enabled",
+      "role"
+    ],
+    "showRemainingFields": false,
+    "formSections": [
+      {
+        "id": "main",
+        "order": 1,
+        "fieldsOrder": ["email", "firstName", "lastName"]
+      },
+      {
+        "id": "secondary",
+        "order": 2,
+        "fieldsOrder": ["enabled"]
+      }
+    ]
   }
 }
