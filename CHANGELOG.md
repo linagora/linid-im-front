@@ -2,6 +2,21 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.25](https://github.com/linagora/linid-im-front/compare/v0.0.24...v0.0.25) (2026-02-02)
+
+
+### Features
+
+* add complete configuration for users module ([e86c1f0](https://github.com/linagora/linid-im-front/commit/e86c1f08243f0438a8c4aebdfcb517951e5d3864))
+* add complete design configuration for users module ([f621614](https://github.com/linagora/linid-im-front/commit/f6216144dfe38f965dca461054973e5c95f926f2))
+* add complete i18n translations for users modules ([4a2416a](https://github.com/linagora/linid-im-front/commit/4a2416aa0ada1de84677a618abf56cd84e892d32))
+* **design:** complete global design configuration ([fe4b3dd](https://github.com/linagora/linid-im-front/commit/fe4b3dd314c478b3110fd7fbc1ac94f9bb066df7))
+
+
+### Bug Fixes
+
+* **i18n:** review and align translation files ([ac9acc7](https://github.com/linagora/linid-im-front/commit/ac9acc738a0e549f11b320c84aee004b81869d02))
+
 ### [0.0.24](https://github.com/linagora/linid-im-front/compare/v0.0.23...v0.0.24) (2026-02-02)
 
 ### [0.0.23](https://github.com/linagora/linid-im-front/compare/v0.0.22...v0.0.23) (2026-01-30)
