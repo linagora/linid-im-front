@@ -14,7 +14,8 @@
   "moduleUsers": {
     "HomePage": {
       "title": "Users",
-      "seeUserButton": "See",
+      "seeButton": "See",
+      "createButton": "Create User",
       "error": "Failed to load users",
       "columnAction": "Actions",
       "columnEmail": "Email",
@@ -27,25 +28,91 @@
       }
     },
     "UserDetailsPage": {
+      "title": "User Details",
       "EntityDetailsCard": {
+        "title": "",
         "attributes": {
           "id": "ID",
           "email": "Email",
           "firstName": "First Name",
           "lastName": "Last Name",
+          "displayName": "Display Name",
+          "enabled": "Enabled",
           "role": "Role"
         }
       }
     },
+    "EditUserPage": {
+      "title": "Edit User",
+      "loadError": "Failed to load user data",
+      "editError": "Failed to save changes",
+      "editSuccess": "User updated successfully",
+      "ButtonsCard": {
+        "title": "",
+        "cancel": "Cancel",
+        "confirm": "Save",
+        "confirmLoading": "Saving..."
+      },
+      "formSections": {
+        "main": {
+          "title": "Edit User form",
+          "description": "Modify the user information and click on 'Save' to apply changes."
+        },
+        "secondary": {
+          "title": "Secondary Information",
+          "description": "Additional user details can be modified here."
+        }
+      }
+    },
+    "NewUserPage": {
+      "title": "Create New User",
+      "error": "Failed to create user",
+      "success": "User created successfully",
+      "formSections": {
+        "main": {
+          "title": "Create User form",
+          "description": "Enter the basic user information and click on 'Create' to add the new user."
+        },
+        "secondary": {
+          "title": "Secondary Information",
+          "description": "Additional user details can be added here."
+        }
+      },
+      "ButtonsCard": {
+        "title": "",
+        "cancel": "Cancel",
+        "confirm": "Create",
+        "confirmLoading": "Creating..."
+      }
+    },
     "fields": {
       "email": {
-        "label": "Email"
+        "label": "Email",
+        "validation": {
+          "required": "Email is required.",
+          "pattern": "Email must be a valid email address.",
+          "maxLength": "Email cannot exceed {max} characters.",
+          "unknownError": "An unknown error occurred."
+        }
       },
       "firstName": {
-        "label": "First Name"
+        "label": "First Name",
+        "validation": {
+          "required": "First Name is required.",
+          "maxLength": "First Name cannot exceed {max} characters.",
+          "unknownError": "An unknown error occurred."
+        }
       },
       "lastName": {
-        "label": "Last Name"
+        "label": "Last Name",
+        "validation": {
+          "required": "Last Name is required.",
+          "maxLength": "Last Name cannot exceed {max} characters.",
+          "unknownError": "An unknown error occurred."
+        }
+      },
+      "enabled": {
+        "label": "Enabled"
       }
     }
   }
