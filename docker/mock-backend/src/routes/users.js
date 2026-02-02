@@ -68,6 +68,27 @@ router.post('', (req, res) => {
   res.status(201).json(newUser);
 });
 
+router.post('/validate/:field', (req, res) => {
+  const field = req.params.field;
+  const value = req.body;
+
+  const isValid = !users.content.some((user) => user[field] === value);
+
+  if (isValid) {
+    res.status(204).send();
+  } else {
+    res
+      .status(400)
+      .json(
+        createErrorResponse(
+          400,
+          'Invalid field value',
+          'error.entity.attributes'
+        )
+      );
+  }
+});
+
 router.put('/:id', (req, res) => {
   const userId = req.params.id;
   const updatedUser = req.body;
