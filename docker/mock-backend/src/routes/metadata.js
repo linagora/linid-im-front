@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import mockEntities from '../data/entities.js';
 import mockRoutes from '../data/routes.js';
+import { createErrorResponse } from '../utils.js';
 import {
   validateEntities,
   validateRoutes,
@@ -55,11 +56,17 @@ router.get('/entities/:entity', (req, res) => {
   const entityData = validatedEntities.find((e) => e.name === entity);
 
   if (!entityData) {
-    return res.status(404).json({
-      error: 'Entity not found',
-      message: `Entity '${entity}' does not exist`,
-      availableEntities: validatedEntities.map((e) => e.name),
-    });
+    return res.status(404).json(
+      createErrorResponse(
+        404,
+        `Entity '${entity}' does not exist`,
+        'error.entity_not_found',
+        {},
+        {
+          availableEntities: validatedEntities.map((e) => e.name),
+        }
+      )
+    );
   }
 
   res.json(entityData);

@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import users from '../data/users.js';
+import { createErrorResponse } from '../utils.js';
 
 const router = Router();
 
@@ -55,7 +56,9 @@ router.get('/:id', (req, res) => {
   if (user) {
     res.status(200).json(user);
   } else {
-    res.status(404).json({ error: 'User not found' });
+    res
+      .status(404)
+      .json(createErrorResponse(404, 'User not found', 'error.user_not_found'));
   }
 });
 
@@ -75,7 +78,9 @@ router.put('/:id', (req, res) => {
     }
     res.status(200).json(updatedUser);
   } else {
-    res.status(404).json({ error: 'User not found' });
+    res
+      .status(404)
+      .json(createErrorResponse(404, 'User not found', 'error.user_not_found'));
   }
 });
 
