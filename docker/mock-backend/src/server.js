@@ -11,6 +11,7 @@ const PORT = process.env.PORT || 8080;
 // Middleware
 app.use(cors());
 app.use(express.json());
+app.use(express.text({ type: 'application/x-www-form-urlencoded' }));
 
 // Health check
 app.get('/health', (_req, res) => {
@@ -59,5 +60,6 @@ app.listen(PORT, () => {
   console.log(`  - GET /api/users`);
   console.log(`  - GET /api/users/:id`);
   console.log(`  - POST /api/users`);
+  console.log(`  - POST /api/users/validate/:field`);
   console.log(`  - PUT /api/users/:id`);
 });
