@@ -1,9 +1,9 @@
 import cors from 'cors';
 import express from 'express';
-import { createErrorResponse } from 'utils.js';
 import i18n from './data/i18n.js';
 import metadataRoutes from './routes/metadata.js';
 import usersRoutes from './routes/users.js';
+import { createErrorResponse } from './utils.js';
 
 const app = express();
 const PORT = process.env.PORT || 8080;
