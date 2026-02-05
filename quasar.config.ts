@@ -20,6 +20,7 @@ export default defineConfig((ctx) => {
       'ui-design',
       'remotes',
       'module-lifecycle',
+      'theme',
     ],
 
     // https://v2.quasar.dev/quasar-cli-vite/quasar-config-file#css
