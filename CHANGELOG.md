@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.27](https://github.com/linagora/linid-im-front/compare/v0.0.26...v0.0.27) (2026-02-05)
+
+
+### Features
+
+* add system to import color theme ([0df9568](https://github.com/linagora/linid-im-front/commit/0df9568210a5ed71caeefd47c7d4ee17eaca5da1))
+
 ### [0.0.26](https://github.com/linagora/linid-im-front/compare/v0.0.25...v0.0.26) (2026-02-05)
 
 ### [0.0.25](https://github.com/linagora/linid-im-front/compare/v0.0.24...v0.0.25) (2026-02-02)
