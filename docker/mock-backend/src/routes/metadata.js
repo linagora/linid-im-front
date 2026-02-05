@@ -53,7 +53,7 @@ router.get('/entities', (_req, res) => {
  */
 router.get('/entities/:entity', (req, res) => {
   const { entity } = req.params;
-  const entityData = validatedEntities.find((e) => e.name === entity);
+  const entityData = validatedEntities.find((e) => e.route === entity);
 
   if (!entityData) {
     return res.status(404).json(
@@ -63,7 +63,7 @@ router.get('/entities/:entity', (req, res) => {
         'error.entity_not_found',
         {},
         {
-          availableEntities: validatedEntities.map((e) => e.name),
+          availableEntities: validatedEntities.map((e) => e.route),
         }
       )
     );

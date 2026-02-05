@@ -1,6 +1,6 @@
 {
   "instanceId": "moduleUsers",
-  "entity": "user",
+  "entity": "users",
   "remoteName": "moduleUsers",
   "apiEndpoint": "api/users",
   "options": {

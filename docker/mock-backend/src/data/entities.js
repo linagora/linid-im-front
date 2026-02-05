@@ -5,6 +5,7 @@
 export default [
   {
     name: 'user',
+    route: 'users',
     attributes: [
       {
         name: 'id',
@@ -77,6 +78,7 @@ export default [
   },
   {
     name: 'group',
+    route: 'groups',
     attributes: [
       {
         name: 'id',
