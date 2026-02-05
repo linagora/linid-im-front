@@ -30,6 +30,7 @@ const AttributeSchema = z.object({
  */
 const EntitySchema = z.object({
   name: z.string().min(1),
+  route: z.string().min(1),
   attributes: z.array(AttributeSchema),
 });
 
