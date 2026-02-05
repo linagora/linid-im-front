@@ -94,6 +94,13 @@ Explains how global Quasar component defaults are configured via a JSON file, en
 
 ---
 
+### 🎨 **Theme Management Guide**
+
+Explains how the theme system loads and injects CSS variables, and how to use theme colors in Vue templates.
+→ [`theme.md`](docs/theme.md)
+
+---
+
 > More documentation will be added as the host evolves.
 
 ---
