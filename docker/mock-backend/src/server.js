@@ -10,8 +10,11 @@ const PORT = process.env.PORT || 8080;
 
 // Middleware
 app.use(cors());
+app.use(
+  '/api/users/validate/:field',
+  express.text({ type: 'application/json' })
+);
 app.use(express.json());
-app.use(express.text({ type: 'application/x-www-form-urlencoded' }));
 
 // Health check
 app.get('/health', (_req, res) => {
