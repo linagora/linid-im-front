@@ -1,4 +1,5 @@
 import { Router } from 'express';
+import entities from '../data/entities.js';
 import users from '../data/users.js';
 import { createErrorResponse } from '../utils.js';
 
@@ -72,21 +73,44 @@ router.post('/validate/:field', (req, res) => {
   const field = req.params.field;
   const value = req.body;
 
-  const isValid = !users.content.some((user) => user[field] === value);
+  const fieldSettings = entities
+    .find((e) => e.route === 'users')
+    ?.attributes.find((a) => a.name === field);
 
-  if (isValid) {
-    res.status(204).send();
-  } else {
-    res
-      .status(400)
-      .json(
-        createErrorResponse(
-          400,
-          'Invalid field value',
-          'error.entity.attributes'
-        )
-      );
+  for (const setting in fieldSettings.inputSettings) {
+    switch (fieldSettings.inputSettings[setting]) {
+      case 'maxLength':
+        if (value.length > fieldSettings.inputSettings[setting]) {
+          return res
+            .status(400)
+            .json(
+              createErrorResponse(
+                400,
+                'Invalid field value',
+                'error.entity.attributes'
+              )
+            );
+        }
+        break;
+      case 'pattern':
+        if (!new RegExp(fieldSettings.inputSettings[setting]).test(value)) {
+          return res
+            .status(400)
+            .json(
+              createErrorResponse(
+                400,
+                'Invalid field value',
+                'error.entity.attributes'
+              )
+            );
+        }
+        break;
+      default:
+        break;
+    }
   }
+
+  res.status(204).send();
 });
 
 router.put('/:id', (req, res) => {
