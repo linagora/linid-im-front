@@ -30,6 +30,7 @@ import {
   setI18nInstance,
 } from '@linagora/linid-im-front-corelib';
 import { api } from 'boot/axios';
+import { Quasar } from 'quasar';
 import type messages from 'src/i18n';
 import { createI18n, type I18n } from 'vue-i18n';
 import { defineBoot } from '#q-app/wrappers';
@@ -104,4 +105,15 @@ export default defineBoot(async ({ app }) => {
 
   // Set i18n instance on app
   app.use(i18n);
+
+  // Load Quasar language pack to translate built-in components (table pagination, etc.)
+  const langIso = i18nConfig.locale.substring(0, 2);
+  try {
+    const quasarLang = await import(
+      /* @vite-ignore */ `quasar/lang/${langIso}.js`
+    );
+    Quasar.lang.set(quasarLang.default);
+  } catch {
+    // Fallback: keep default English if language pack not found
+  }
 });
