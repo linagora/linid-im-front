@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.28](https://github.com/linagora/linid-im-front/compare/v0.0.27...v0.0.28) (2026-02-06)
+
+
+### Bug Fixes
+
+* change import of user for mock-backend ([cb5faa4](https://github.com/linagora/linid-im-front/commit/cb5faa41972abbf8d5c027f6c8d15b18b1948d97))
+
 ### [0.0.27](https://github.com/linagora/linid-im-front/compare/v0.0.26...v0.0.27) (2026-02-05)
 
 
