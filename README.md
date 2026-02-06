@@ -101,6 +101,13 @@ Explains how the theme system loads and injects CSS variables, and how to use th
 
 ---
 
+### 🎨 **Theme Style Guide**
+
+Explains how to use custom CSS overrides via `theme-style.css` for layout, fonts, and visual adjustments beyond colors and component props.
+→ [`theme-style.md`](docs/theme-style.md)
+
+---
+
 > More documentation will be added as the host evolves.
 
 ---
