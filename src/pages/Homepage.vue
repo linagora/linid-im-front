@@ -27,7 +27,7 @@
 <template>
   <q-page
     data-cy="home-page"
-    class="q-pa-md flex justify-center bg-grey-1"
+    class="q-pa-md flex justify-center"
   >
     <q-card class="q-pa-md q-mb-lg shadow-2 self-start home-page--info">
       <!-- eslint-disable vue/no-v-text-v-html-on-component vue/no-v-html -->
