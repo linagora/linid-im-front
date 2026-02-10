@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.29](https://github.com/linagora/linid-im-front/compare/v0.0.28...v0.0.29) (2026-02-10)
+
+
+### Features
+
+* add theme-style CSS override mechanism ([e39d66d](https://github.com/linagora/linid-im-front/commit/e39d66d9bfe04d397065581422ee67c9f1cfac4a))
+* **i18n:** load Quasar language pack dynamically based on locale ([409c17a](https://github.com/linagora/linid-im-front/commit/409c17adfcc97830add885f136ffd03124368e95))
+
 ### [0.0.28](https://github.com/linagora/linid-im-front/compare/v0.0.27...v0.0.28) (2026-02-06)
 
 
