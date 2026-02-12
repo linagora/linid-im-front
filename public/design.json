@@ -183,6 +183,14 @@
               "name": "toggle_on"
             }
           }
+        },
+        "dateOfBirth": {
+          "information-card": {
+            "q-icon": {
+              "color": "primary",
+              "name": "cake"
+            }
+          }
         }
       },
       "edit-button": {

@@ -8,6 +8,7 @@ export default {
       displayName: 'John Doe',
       enabled: true,
       role: 'admin',
+      dateOfBirth: '1990/01/01',
     },
     {
       id: '00000000-0000-0000-0000-000000000001',
@@ -17,6 +18,7 @@ export default {
       displayName: 'Jane Roe',
       enabled: true,
       role: 'user',
+      dateOfBirth: '1992/02/02',
     },
   ],
   pageable: {
