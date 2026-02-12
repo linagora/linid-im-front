@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.30](https://github.com/linagora/linid-im-front/compare/v0.0.29...v0.0.30) (2026-02-12)
+
+
+### Features
+
+* add q-file design ([a8768b5](https://github.com/linagora/linid-im-front/commit/a8768b5f63e1a8c693fab0c57c432c2a6faa5172))
+
 ### [0.0.29](https://github.com/linagora/linid-im-front/compare/v0.0.28...v0.0.29) (2026-02-10)
 
 
