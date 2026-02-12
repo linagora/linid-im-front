@@ -74,6 +74,14 @@ export default [
           default: 'user',
         },
       },
+      {
+        name: 'dateOfBirth',
+        type: 'Date',
+        required: false,
+        hasValidations: false,
+        input: 'Date',
+        inputSettings: {},
+      },
     ],
   },
   {
