@@ -53,7 +53,12 @@
     },
     "q-card": {},
     "q-date": {},
-    "q-img": {}
+    "q-img": {},
+    "q-file": {
+      "dense": true,
+      "outline": true,
+      "color": "primary"
+    }
   },
   "base-layout": {
     "header": {
