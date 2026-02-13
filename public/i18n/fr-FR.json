@@ -112,6 +112,10 @@
           "unknownError": "Une erreur inconnue est survenue."
         }
       },
+      "role": {
+        "label": "Rôle",
+        "validation": { "unknownError": "Une erreur inconnue est survenue." }
+      },
       "enabled": {
         "label": "Activé"
       },

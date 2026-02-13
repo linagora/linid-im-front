@@ -68,10 +68,10 @@ export default [
         type: 'String',
         required: false,
         hasValidations: true,
-        input: 'Select',
+        input: 'List',
         inputSettings: {
-          options: ['admin', 'user', 'guest'],
-          default: 'user',
+          values: ['admin', 'user', 'guest'],
+          defaultValue: 'user',
         },
       },
       {

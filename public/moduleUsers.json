@@ -86,7 +86,7 @@
       {
         "id": "secondary",
         "order": 2,
-        "fieldsOrder": ["enabled", "dateOfBirth"]
+        "fieldsOrder": ["role", "enabled", "dateOfBirth"]
       }
     ]
   }
