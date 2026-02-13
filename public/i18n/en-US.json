@@ -112,6 +112,12 @@
           "unknownError": "An unknown error occurred."
         }
       },
+      "role": {
+        "label": "Role",
+        "validation": {
+          "unknownError": "An unknown error occurred."
+        }
+      },
       "enabled": { "label": "Enabled" },
       "dateOfBirth": { "label": "Date of Birth" }
     }

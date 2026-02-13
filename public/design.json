@@ -58,6 +58,10 @@
       "dense": true,
       "outline": true,
       "color": "primary"
+    },
+    "q-select": {
+      "outlined": true,
+      "dense": true
     }
   },
   "base-layout": {

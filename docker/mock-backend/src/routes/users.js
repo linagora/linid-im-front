@@ -77,10 +77,12 @@ router.post('/validate/:field', (req, res) => {
     .find((e) => e.route === 'users')
     ?.attributes.find((a) => a.name === field);
 
-  for (const setting in fieldSettings.inputSettings) {
-    switch (fieldSettings.inputSettings[setting]) {
+  for (const [setting, settingValue] of Object.entries(
+    fieldSettings.inputSettings
+  )) {
+    switch (setting) {
       case 'maxLength':
-        if (value.length > fieldSettings.inputSettings[setting]) {
+        if (value.length > settingValue) {
           return res
             .status(400)
             .json(
@@ -93,7 +95,20 @@ router.post('/validate/:field', (req, res) => {
         }
         break;
       case 'pattern':
-        if (!new RegExp(fieldSettings.inputSettings[setting]).test(value)) {
+        if (!new RegExp(settingValue).test(value)) {
+          return res
+            .status(400)
+            .json(
+              createErrorResponse(
+                400,
+                'Invalid field value',
+                'error.entity.attributes'
+              )
+            );
+        }
+        break;
+      case 'values':
+        if (!settingValue.includes(value)) {
           return res
             .status(400)
             .json(
