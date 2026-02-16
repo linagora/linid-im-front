@@ -114,4 +114,26 @@ export default [
       },
     ],
   },
+  {
+    name: 'restrictedDomain',
+    route: 'restrictedDomains',
+    attributes: [
+      {
+        name: 'id',
+        type: 'UUID',
+        required: true,
+        hasValidations: true,
+        input: 'Text',
+        inputSettings: { readonly: true },
+      },
+      {
+        name: 'name',
+        type: 'String',
+        required: true,
+        hasValidations: true,
+        input: 'Text',
+        inputSettings: {},
+      },
+    ],
+  },
 ];

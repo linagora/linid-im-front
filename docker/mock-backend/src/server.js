@@ -2,6 +2,7 @@ import cors from 'cors';
 import express from 'express';
 import i18n from './data/i18n.js';
 import metadataRoutes from './routes/metadata.js';
+import restrictedDomainsRoutes from './routes/restrictedDomains.js';
 import usersRoutes from './routes/users.js';
 import { createErrorResponse } from './utils.js';
 
@@ -36,6 +37,9 @@ app.get('/i18n/:lang.json', (req, res) => {
 // users routes (compliant with linid-im-api)
 app.use('/api/users', usersRoutes);
 
+// restricted domains routes (compliant with linid-im-api)
+app.use('/api/restrictedDomains', restrictedDomainsRoutes);
+
 // Error handler
 app.use((err, _req, res, _next) => {
   console.error('[Mock Backend] Error:', err.message);
@@ -65,4 +69,5 @@ app.listen(PORT, () => {
   console.log(`  - POST /api/users`);
   console.log(`  - POST /api/users/validate/:field`);
   console.log(`  - PUT /api/users/:id`);
+  console.log(`  - GET /api/restrictedDomains`);
 });

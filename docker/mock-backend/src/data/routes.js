@@ -75,4 +75,10 @@ export default [
     entity: 'group',
     variables: [],
   },
+  {
+    method: 'GET',
+    path: '/restrictedDomains',
+    entity: 'restrictedDomain',
+    variables: [],
+  },
 ];
