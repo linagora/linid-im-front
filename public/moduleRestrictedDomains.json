@@ -1,0 +1,7 @@
+{
+  "instanceId": "moduleRestrictedDomains",
+  "entity": "restrictedDomains",
+  "remoteName": "moduleRestrictedDomains",
+  "apiEndpoint": "api/restrictedDomains",
+  "options": {}
+}
