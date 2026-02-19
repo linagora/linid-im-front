@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.32](https://github.com/linagora/linid-im-front/compare/v0.0.31...v0.0.32) (2026-02-19)
+
+
+### Features
+
+* add new component to design configuration ([6a7cc93](https://github.com/linagora/linid-im-front/commit/6a7cc937441089fdf5097a0f6dbf86c1f6ef2174))
+
 ### [0.0.31](https://github.com/linagora/linid-im-front/compare/v0.0.30...v0.0.31) (2026-02-16)
 
 ### [0.0.30](https://github.com/linagora/linid-im-front/compare/v0.0.29...v0.0.30) (2026-02-12)
