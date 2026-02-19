@@ -62,7 +62,13 @@
     "q-select": {
       "outlined": true,
       "dense": true
-    }
+    },
+    "q-spinner": {},
+    "q-btn-dropdown": {},
+    "q-list": {},
+    "q-item": {},
+    "q-item-section": {},
+    "q-item-label": {}
   },
   "base-layout": {
     "header": {
