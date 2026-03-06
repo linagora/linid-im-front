@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.38](https://github.com/linagora/linid-im-front/compare/v0.0.37...v0.0.38) (2026-03-06)
+
+
+### Bug Fixes
+
+* use store after initialization during module lifecycle ([d8d1021](https://github.com/linagora/linid-im-front/commit/d8d1021c666750fa8daf6e5ec1bb4677deb57b8b))
+
 ### [0.0.37](https://github.com/linagora/linid-im-front/compare/v0.0.36...v0.0.37) (2026-03-06)
 
 
