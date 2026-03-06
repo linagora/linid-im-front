@@ -24,12 +24,12 @@
  * LinID Identity Manager software.
  */
 
+import { setNunjucksEnv } from '@linagora/linid-im-front-corelib';
 import nunjucks from 'nunjucks';
+import { defineBoot } from '#q-app/wrappers';
 
-/**
- * Nunjucks environment for template rendering.
- * Configured to auto-escape false for path rendering.
- */
-const nunjucksEnv = nunjucks.configure({ autoescape: false });
-
-export default nunjucksEnv;
+export default defineBoot(async ({ app }) => {
+  const nunjucksEnv = nunjucks.configure({ autoescape: false });
+  app.config.globalProperties.$nunjucks = nunjucksEnv;
+  setNunjucksEnv(nunjucksEnv);
+});

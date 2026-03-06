@@ -32,12 +32,12 @@ import type {
 } from '@linagora/linid-im-front-corelib';
 import {
   getI18nInstance,
+  getNunjucksEnv,
   merge,
   registerModuleHostConfiguration,
   renameKeys,
 } from '@linagora/linid-im-front-corelib';
 import { loadRemote } from '@module-federation/enhanced/runtime';
-import nunjucksEnv from 'boot/nunjucks';
 import type { Component } from 'vue';
 import type { RouteMeta, RouteRecordRaw } from 'vue-router';
 import type { BootFileParams } from '#q-app';
@@ -172,7 +172,7 @@ export function toRouteRecordRaw(
   config: ModuleHostConfig<unknown>
 ): RouteRecordRaw {
   return {
-    path: nunjucksEnv.renderString(route.path, { config }),
+    path: getNunjucksEnv().renderString(route.path, { config }),
     component: async () =>
       (await loadRemote<FederatedModule<Component>>(route.component))!.default,
     children:
@@ -197,7 +197,7 @@ export function renderMeta(
   config: ModuleHostConfig<unknown>
 ): unknown {
   if (typeof obj === 'string') {
-    return nunjucksEnv.renderString(obj, { config });
+    return getNunjucksEnv().renderString(obj, { config });
   }
 
   if (Array.isArray(obj)) {
@@ -276,7 +276,7 @@ export async function configure(
 
   const i18nMessages = renameKeys(
     await getI18nMessages(config),
-    (key: string) => nunjucksEnv.renderString(key, { config })
+    (key: string) => getNunjucksEnv().renderString(key, { config })
   );
 
   if (i18nMessages) {

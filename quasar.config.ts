@@ -15,6 +15,7 @@ export default defineConfig((ctx) => {
     // https://v2.quasar.dev/quasar-cli-vite/boot-files
     boot: [
       'pinia',
+      'nunjucks',
       'i18n',
       'axios',
       'ui-design',
