@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.37](https://github.com/linagora/linid-im-front/compare/v0.0.36...v0.0.37) (2026-03-06)
+
+
+### Features
+
+* register zones configuration  during post-init ([c52dc23](https://github.com/linagora/linid-im-front/commit/c52dc232356bbd005281214e94784a1ee3f94f28))
+* set and use nunjucks global shared instance ([0ad0257](https://github.com/linagora/linid-im-front/commit/0ad025708dc92e2d2bf9c12ada43ce3f1409593c))
+
 ### [0.0.36](https://github.com/linagora/linid-im-front/compare/v0.0.35...v0.0.36) (2026-03-02)
 
 ### [0.0.35](https://github.com/linagora/linid-im-front/compare/v0.0.34...v0.0.35) (2026-02-27)
