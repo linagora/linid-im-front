@@ -95,16 +95,26 @@ Receive and validate the module’s configuration loaded from its JSON file.
 
 ### **Route Loading**
 
-After all modules complete the **Initialize** phase, the host automatically loads and registers routes from each module:
+During the Configure phase, the host automatically loads and registers routes from each module:
 
 1. The host loads `${remoteName}/routes` via Module Federation
 2. Applies **Nunjucks templating** to route paths using the module's `ModuleHostConfig`
 3. Converts `LinidRoute[]` to Vue Router `RouteRecordRaw[]` using `loadAsyncComponent`
 4. Registers the routes in the Vue Router instance
 
-**Modules do not need to register routes manually** during the Initialize phase.
+**Modules do not need to register routes manually** during the Configure phase.
 
 For more details on route management, see the [Route Management Guide](./routes.md).
+
+### **i18n Loading**
+
+During the Configure phase, the host automatically loads and merges i18n messages from each module:
+
+1. The host loads `${remoteName}/i18n` via Module Federation
+2. Applies **Nunjucks templating** to all message keys using the module's `ModuleHostConfig`
+3. Merges the messages into each locale of the Vue i18n instance
+
+**Modules do not need to register translations manually.** If no i18n entry point is exposed, this step is silently skipped.
 
 ---
 
@@ -146,6 +156,26 @@ Perform cross-module setup after all modules have reached the Ready phase.
 - Integrate with other modules
 - Exchange references or services
 - Finalize features that require all modules to be initialized
+
+### **Zone Registration**
+
+During the Post-Init phase, the host automatically registers UI zones declared in the module configuration:
+
+1. The host reads the `zones` array from the module's `ModuleHostConfig`
+2. For each zone entry, it calls `linidZoneStore.register(zoneName, { plugin, props })`
+3. Registered zones become available to the host layout for dynamic rendering
+
+A zone entry in `ModuleHostConfig` has the following shape:
+
+```ts
+{
+  zone: string;       // Target zone identifier in the host layout
+  plugin: string;     // Component or plugin to render in that zone
+  props?: object;     // Optional props passed to the plugin
+}
+```
+
+**Modules do not need to call `useLinidZoneStore` themselves.** If no `zones` are defined, this step is silently skipped.
 
 ---
 

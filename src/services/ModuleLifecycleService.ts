@@ -36,11 +36,14 @@ import {
   merge,
   registerModuleHostConfiguration,
   renameKeys,
+  useLinidZoneStore,
 } from '@linagora/linid-im-front-corelib';
 import { loadRemote } from '@module-federation/enhanced/runtime';
 import type { Component } from 'vue';
 import type { RouteMeta, RouteRecordRaw } from 'vue-router';
 import type { BootFileParams } from '#q-app';
+
+const linidZoneStore = useLinidZoneStore();
 
 /**
  * Loads and aggregates configuration files for all federated modules.
@@ -370,5 +373,12 @@ export async function postInit(
   config: ModuleHostConfig<unknown>,
   _boot: BootFileParams
 ) {
+  config.zones?.forEach(({ zone: zoneName, plugin, props }) => {
+    linidZoneStore.register(zoneName, {
+      plugin,
+      props,
+    });
+  });
+
   return module.postInit(config);
 }
