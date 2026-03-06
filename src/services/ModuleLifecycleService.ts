@@ -42,9 +42,6 @@ import { loadRemote } from '@module-federation/enhanced/runtime';
 import type { Component } from 'vue';
 import type { RouteMeta, RouteRecordRaw } from 'vue-router';
 import type { BootFileParams } from '#q-app';
-
-const linidZoneStore = useLinidZoneStore();
-
 /**
  * Loads and aggregates configuration files for all federated modules.
  *
@@ -373,6 +370,8 @@ export async function postInit(
   config: ModuleHostConfig<unknown>,
   _boot: BootFileParams
 ) {
+  const linidZoneStore = useLinidZoneStore();
+
   config.zones?.forEach(({ zone: zoneName, plugin, props }) => {
     linidZoneStore.register(zoneName, {
       plugin,
