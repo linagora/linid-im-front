@@ -1,15 +1,22 @@
 import { registerModuleHostConfiguration } from '@linagora/linid-im-front-corelib';
 import { loadRemote } from '@module-federation/enhanced/runtime';
+import nunjucks from 'nunjucks';
 import {
-  getModulesConfiguration,
-  setup,
   configure,
+  getModulesConfiguration,
   initialize,
-  ready,
   postInit,
+  ready,
   renderMeta,
+  setup,
 } from 'src/services/ModuleLifecycleService';
-import { describe, it, expect, beforeEach, vi } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
+
+const { mockRegister } = vi.hoisted(() => ({
+  mockRegister: vi.fn(),
+}));
+
+const nunjucksEnv = nunjucks.configure({ autoescape: false });
 
 vi.mock('@module-federation/enhanced/runtime', () => ({
   loadRemote: vi.fn(),
@@ -19,6 +26,12 @@ vi.mock('@linagora/linid-im-front-corelib', () => ({
   registerModuleHostConfiguration: vi.fn(),
   loadAsyncComponent: vi.fn(),
   renameKeys: () => null,
+  getNunjucksEnv: () => ({
+    renderString: (str, ctx) => nunjucksEnv.renderString(str, ctx),
+  }),
+  useLinidZoneStore: vi.fn(() => ({
+    register: mockRegister,
+  })),
 }));
 
 global.fetch = vi.fn();
@@ -138,6 +151,39 @@ describe('Test service: ModuleLifecycleService', () => {
       const result = await postInit(mockModule, mockConfig, mockBoot);
       expect(mockModule.postInit).toHaveBeenCalled();
       expect(result).toBe('postInit-done');
+    });
+
+    it('should register zones when config has zones', async () => {
+      const configWithZones = {
+        ...mockConfig,
+        zones: [
+          { zone: 'header', plugin: 'MyPlugin', props: { title: 'Hello' } },
+          { zone: 'footer', plugin: 'FooterPlugin', props: {} },
+        ],
+      };
+
+      await postInit(mockModule, configWithZones, mockBoot);
+
+      expect(mockRegister).toHaveBeenCalledTimes(2);
+      expect(mockRegister).toHaveBeenCalledWith('header', {
+        plugin: 'MyPlugin',
+        props: { title: 'Hello' },
+      });
+      expect(mockRegister).toHaveBeenCalledWith('footer', {
+        plugin: 'FooterPlugin',
+        props: {},
+      });
+    });
+
+    it('should not register zones when config has no zones', async () => {
+      await postInit(mockModule, mockConfig, mockBoot);
+      expect(mockRegister).not.toHaveBeenCalled();
+    });
+
+    it('should not register zones when zones array is empty', async () => {
+      const configWithEmptyZones = { ...mockConfig, zones: [] };
+      await postInit(mockModule, configWithEmptyZones, mockBoot);
+      expect(mockRegister).not.toHaveBeenCalled();
     });
   });
 
